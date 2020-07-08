@@ -1,0 +1,84 @@
+{
+  "name": "snyk-api-ts-client",
+  "description": "Snyk Api Client generated from API Blueprint",
+  "main": "dist/index.js",
+  "scripts": {
+    "format:check": "prettier --check '{''{src,test}/!(fixtures)/**/*,*}.{js,ts,json,yml}'",
+    "format": "prettier --write '{''{src,test}/!(fixtures)/**/*,*}.{js,ts,json,yml}'",
+    "lint": "npm run format:check && npm run lint:eslint",
+    "lint:eslint": "eslint --cache '{lib,test}/**/*.ts'",
+    "test": "snyk test && npm run lint && npm run test:unit",
+    "test:unit": "jest ./test/lib",
+    "test:coverage": "npm run test:unit -- --coverage",
+    "test:watch": "tsc-watch --onSuccess 'npm run test:unit'",
+    "build": "tsc",
+    "build-watch": "tsc -w",
+    "prepare": "npm run snyk-protect && npm run build",
+    "snyk-test": "snyk test",
+    "convert-to-swagger": "npx apib2swagger -i ./snyk.apib -o ./snyk.json",
+    "prepare-swagger": "node dist/preprocessors/prepare.js > snyk-prepared.json",
+    "generate-classes": "node dist/generators/generate.js",
+    "generate-test-cases": "node dist/generators/generateTestCases.js",
+    "generate-test-fixtures": "node dist/generators/generateTestFixtures.js",
+    "pkg-binaries": "npx pkg . -t node12-linux-x64,node12-macos-x64,node12-win-x64 --out-path ./dist/binaries",
+    "snyk-protect": "snyk protect"
+  },
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snyk-tech-services/snyk-api-ts-client"
+  },
+  "author": "Snyk Tech Services",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "homepage": "https://github.com/snyk-tech-services/snyk-api-ts-client#readme",
+  "dependencies": {
+    "@manifoldco/swagger-to-ts": "^2.0.0",
+    "@snyk/configstore": "^3.2.0-rc1",
+    "@types/lodash": "^4.14.155",
+    "@types/node": "^14.0.12",
+    "axios": "^0.19.2",
+    "debug": "^4.1.1",
+    "lodash": "^4.17.15",
+    "snyk": "^1.360.0",
+    "snyk-config": "^3.0.0",
+    "snyk-request-manager": "^1.1.0",
+    "source-map-support": "^0.5.16",
+    "tslib": "^1.10.0",
+    "typescript": "^3.9.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.1",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.12.26",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "jest": "^25.1.0",
+    "nock": "^13.0.2",
+    "prettier": "2.0.5",
+    "sleep-promise": "^8.0.1",
+    "ts-jest": "^25.1.0",
+    "ts-node": "8.6.2",
+    "tsc-watch": "^4.1.0",
+    "typescript": "^3.7.5"
+  },
+  "pkg": {
+    "scripts": [
+      "dist/**/*.js"
+    ]
+  },
+  "release": {
+    "branches": [
+      "master"
+    ]
+  },
+  "snyk": true
+}

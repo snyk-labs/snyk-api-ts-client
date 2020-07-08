@@ -1,0 +1,17 @@
+node_modules/
+npm-debug.log
+.npmrc
+# output
+dist
+.DS_Store
+*.log
+package-lock.json
+yarn.lock
+.eslintcache
+src/lib/client/generated/*.ts
+snyk.apib
+snyk.json
+snyk-prepared.json
+*.bak
+test/fixtures/*.json
+test/lib/*.test.ts
