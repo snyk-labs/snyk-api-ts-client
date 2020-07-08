@@ -33,6 +33,7 @@ jobs:
             - image: circleci/node:latest
         steps:
             - checkout
+            - run: mv src/lib/index.ts src/lib/index.ts.backup
             - run: npm install
             - run: curl https://snyk.docs.apiary.io/api-description-document -o snyk.apib
             - run: ./prepare-apib.sh snyk.apib
@@ -40,6 +41,7 @@ jobs:
             - run: npm run convert-to-swagger
             - run: npm run prepare-swagger
             - run: npm run generate-classes
+            - run: mv src/lib/index.ts.backup src/lib/index.ts
             - run: npm run format
             - run: npm run build
             - run: npm run generate-test-cases
