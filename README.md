@@ -12,7 +12,7 @@ Taking as input a swagger definition we convert from the api blueprint, it gener
 Generated from [Snyk APIs](https://snyk.docs.apiary.io/)
 
 ## Installation
-`npm i snyk-api-ts-client`
+`npm i snyk-api-ts-client` ! Package to be published by July 10th.
 
 ## Usage
 
