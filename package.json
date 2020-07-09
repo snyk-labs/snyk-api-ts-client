@@ -1,6 +1,7 @@
 {
   "name": "snyk-api-ts-client",
   "description": "Snyk Api Client generated from API Blueprint",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "scripts": {
     "format:check": "prettier --check '{''{src,test}/!(fixtures)/**/*,*}.{js,ts,json,yml}'",
