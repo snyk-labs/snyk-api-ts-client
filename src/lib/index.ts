@@ -6,3 +6,4 @@ export { Reporting } from './client/generated/reporting';
 export { Test } from './client/generated/test';
 export { User } from './client/generated/user';
 export { Root } from './client/generated/root';
+export * from './client/utils/utils';

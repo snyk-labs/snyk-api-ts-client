@@ -1,0 +1,141 @@
+{
+    "org": {
+      "name": "Playground",
+      "id": "12345678-1234-1234-1234-123456789012"
+    },
+    "projects": [
+      {
+        "name": "snyk-tech-services/training-snyk-row:package.json",
+        "id": "4065a016-997d-4719-a31f-50d882737dd3",
+        "created": "2020-03-11T10:35:44.471Z",
+        "origin": "github",
+        "type": "npm",
+        "readOnly": false,
+        "testFrequency": "daily",
+        "totalDependencies": 83,
+        "issueCountsBySeverity": {
+          "low": 0,
+          "high": 2,
+          "medium": 1
+        },
+        "imageTag": "1.0.0",
+        "lastTestedDate": "2020-05-08T02:35:29.802Z",
+        "browseUrl": "https://app.snyk.io/org/playground/project/4065a016-997d-4719-a31f-50d882737dd3",
+        "owner": null,
+        "importingUser": {
+          "id": "4eee4035-64c1-4d66-a2b2-5bfdcee0c448",
+          "name": "aarlaud",
+          "username": "aarlaud",
+          "email": "aarlaud@hotmail.com"
+        },
+        "branch": "master"
+      },
+      {
+        "name": "goof",
+        "id": "ab9e037f-9020-4f77-9c48-b1cb0295a4b6",
+        "created": "2020-04-21T12:24:13.994Z",
+        "origin": "cli",
+        "type": "npm",
+        "readOnly": false,
+        "testFrequency": "daily",
+        "totalDependencies": 471,
+        "issueCountsBySeverity": {
+          "low": 5,
+          "high": 25,
+          "medium": 23
+        },
+        "remoteRepoUrl": "http://github.com/snyk/goof",
+        "imageTag": "1.0.1",
+        "lastTestedDate": "2020-05-08T01:52:48.529Z",
+        "browseUrl": "https://app.snyk.io/org/playground/project/ab9e037f-9020-4f77-9c48-b1cb0295a4b6",
+        "owner": null,
+        "importingUser": {
+          "id": "4eee4035-64c1-4d66-a2b2-5bfdcee0c448",
+          "name": "aarlaud",
+          "username": "aarlaud",
+          "email": "aarlaud@hotmail.com"
+        },
+        "branch": null
+      },
+      {
+        "name": "multiplegoof",
+        "id": "ab9e037f-9020-4f77-9c48-b1cb0295a4b6",
+        "created": "2020-04-21T12:24:13.994Z",
+        "origin": "cli",
+        "type": "npm",
+        "readOnly": false,
+        "testFrequency": "daily",
+        "totalDependencies": 471,
+        "issueCountsBySeverity": {
+          "low": 5,
+          "high": 25,
+          "medium": 23
+        },
+        "remoteRepoUrl": "http://github.com/snyk/goof",
+        "imageTag": "1.0.1",
+        "lastTestedDate": "2020-05-08T01:52:48.529Z",
+        "browseUrl": "https://app.snyk.io/org/playground/project/ab9e037f-9020-4f77-9c48-b1cb0295a4b6",
+        "owner": null,
+        "importingUser": {
+          "id": "4eee4035-64c1-4d66-a2b2-5bfdcee0c448",
+          "name": "aarlaud",
+          "username": "aarlaud",
+          "email": "aarlaud@hotmail.com"
+        },
+        "branch": null
+      },
+      {
+        "name": "multiplegoof",
+        "id": "ab9e037f-9020-4f77-9c48-b1cb0295a4b6",
+        "created": "2020-04-21T12:24:13.994Z",
+        "origin": "cli",
+        "type": "npm",
+        "readOnly": false,
+        "testFrequency": "daily",
+        "totalDependencies": 471,
+        "issueCountsBySeverity": {
+          "low": 5,
+          "high": 25,
+          "medium": 23
+        },
+        "remoteRepoUrl": "http://github.com/snyk/goof",
+        "imageTag": "1.0.1",
+        "lastTestedDate": "2020-05-08T01:52:48.529Z",
+        "browseUrl": "https://app.snyk.io/org/playground/project/ab9e037f-9020-4f77-9c48-b1cb0295a4b6",
+        "owner": null,
+        "importingUser": {
+          "id": "4eee4035-64c1-4d66-a2b2-5bfdcee0c448",
+          "name": "aarlaud",
+          "username": "aarlaud",
+          "email": "aarlaud@hotmail.com"
+        },
+        "branch": "other"
+      },
+      {
+        "name": "multiplegoof",
+        "id": "4065a016-997d-4719-a31f-50d882737dd3",
+        "created": "2020-03-11T10:35:44.471Z",
+        "origin": "github",
+        "type": "npm",
+        "readOnly": false,
+        "testFrequency": "daily",
+        "totalDependencies": 83,
+        "issueCountsBySeverity": {
+          "low": 0,
+          "high": 2,
+          "medium": 1
+        },
+        "imageTag": "1.0.0",
+        "lastTestedDate": "2020-05-08T02:35:29.802Z",
+        "browseUrl": "https://app.snyk.io/org/playground/project/4065a016-997d-4719-a31f-50d882737dd3",
+        "owner": null,
+        "importingUser": {
+          "id": "4eee4035-64c1-4d66-a2b2-5bfdcee0c448",
+          "name": "aarlaud",
+          "username": "aarlaud",
+          "email": "aarlaud@hotmail.com"
+        },
+        "branch": "master"
+      }
+    ]
+  }
