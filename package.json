@@ -14,7 +14,7 @@
     "build": "tsc",
     "build-generators-only": "tsc --project tsconfig-generators-only.json",
     "build-watch": "tsc -w",
-    "prepare": "npm run snyk-protect && npm run build",
+    "prepare": "npm run snyk-protect",
     "snyk-test": "snyk test",
     "convert-to-swagger": "npx apib2swagger -i ./snyk.apib -o ./snyk.json",
     "prepare-swagger": "node dist/preprocessors/prepare.js > snyk-prepared.json",
