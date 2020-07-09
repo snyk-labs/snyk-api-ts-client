@@ -4,7 +4,7 @@ export const getProjectUUID = async (
   orgID: string,
   nonUUIDProjectID: string,
   projectType = 'cli',
-) => {
+): Promise<string> => {
   const body = { body: {} };
   const allProjects = await new Org({ orgId: orgID }).projects.post(body);
   const allProjectsArray = allProjects.projects as Array<any>;
