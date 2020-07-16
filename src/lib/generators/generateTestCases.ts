@@ -162,16 +162,45 @@ const extractBodyTypeFromCommand = (command: string): string => {
   return namespacePath != '' ? `${namespacePath}.${typeName}` : `${typeName}`;
 };
 
+const extractResponseTypeFromCommand = (command: string): string => {
+  const splitCommand = command.split('.');
+  // length-1 of that array gives the number of subclasses we need to go through
+  if (splitCommand.length > 2) {
+    splitCommand.shift();
+  }
+  const readyToComposeCommandHierarchy = splitCommand.map((x) =>
+    _.capitalize(x.split('(')[0]),
+  );
+
+  const namespacePath = readyToComposeCommandHierarchy
+    .slice(0, readyToComposeCommandHierarchy.length - 2)
+    .join('.');
+  const typeName =
+    readyToComposeCommandHierarchy
+      .slice(
+        readyToComposeCommandHierarchy.length - 2,
+        readyToComposeCommandHierarchy.length,
+      )
+      .join('') + 'ResponseType';
+  return namespacePath != '' ? `${namespacePath}.${typeName}` : `${typeName}`;
+};
+
 const generateTestFile = (
   className: string,
   commandList: Array<Array<string>>,
 ) => {
   const testFullFilename = './test/lib/' + className + '.test.ts';
   let codeToReturn = '';
-  codeToReturn += `import {${_.capitalize(
+  codeToReturn += `import {${_.capitalize(className)}, ${_.capitalize(
     className,
-  )}} from '../../src/lib/index'
+  )}Types} from '../../src/lib/index'
     `;
+  codeToReturn += `import { AxiosResponse } from "axios"
+  import mockAxios from 'jest-mock-axios'
+  afterEach(() => {
+    mockAxios.reset();
+  });
+  `;
   const namespacesToImport: Array<string> = [];
   commandList.forEach((command) => {
     if (command[0].indexOf('.put(') > 0 || command[0].indexOf('.post(') > 0) {
@@ -183,34 +212,46 @@ const generateTestFile = (
       }
     }
   });
+  commandList.forEach((command) => {
+    const namespaceName = extractResponseTypeFromCommand(command[0])
+      .split('.')
+      .filter((x) => x)[0];
 
+    if (!namespacesToImport.includes(namespaceName)) {
+      namespacesToImport.push(namespaceName);
+    }
+  });
+  // codeToReturn += `import {${namespacesToImport.join(
+  //   ',',
+  // )}} from '../../src/lib/index'
+  // `;
   codeToReturn += `const fixtures = require('../fixtures/${className}.json').fixtures
 
   `;
 
-  codeToReturn += `import nock from 'nock';`;
-  codeToReturn += `
-  beforeEach(() => {
-    return nock('https://snyk.io')
-    .persist()
-    .get(/./)
-    .reply(200, (uri: string) => {
-            return uri
-    })
-    .put(/./)
-    .reply(200, (uri: string, requestBody: Record<string, any>) => {
-          return {"uri": uri, "body": requestBody}
-    })
-    .post(/./)
-    .reply(200, (uri: string, requestBody: Record<string, any>) => {
-          return {"uri": uri, "body": requestBody}
-    })
-    .delete(/./)
-    .reply(200, (uri: string) => {
-          return uri
-    })
-  })
-  `;
+  // codeToReturn += `import nock from 'nock';`;
+  // codeToReturn += `
+  // beforeEach(() => {
+  //   return nock('https://snyk.io')
+  //   .persist()
+  //   .get(/./)
+  //   .reply(200, (uri: string) => {
+  //           return uri
+  //   })
+  //   .put(/./)
+  //   .reply(200, (uri: string, requestBody: Record<string, any>) => {
+  //         return {"uri": uri, "body": requestBody}
+  //   })
+  //   .post(/./)
+  //   .reply(200, (uri: string, requestBody: Record<string, any>) => {
+  //         return {"uri": uri, "body": requestBody}
+  //   })
+  //   .delete(/./)
+  //   .reply(200, (uri: string) => {
+  //         return uri
+  //   })
+  // })
+  // `;
 
   codeToReturn += `describe('Testing ${_.capitalize(className)} class', () => {
         `;
@@ -231,7 +272,27 @@ const generateTestFile = (
     codeToReturn += `   it('Testing endpoint: ${
       command[1]
     } - ${commandMethod.toUpperCase()} method', async () => {
-            `;
+            
+      try {
+        `;
+
+    codeToReturn += `
+      const response: ${_.capitalize(
+        className,
+      )}Types.${extractResponseTypeFromCommand(
+      command[0],
+    )} = fixtures.response.${commandCoordinates.join('.')}
+      
+    
+    const axiosResponse: AxiosResponse = {
+      data: response,
+      status: 200,
+      statusText: "OK",
+      config: {},
+      headers: {}
+    };
+    `;
+
     if (commandMethod == 'put' || commandMethod == 'post') {
       // extract the namespace(s) from command after the first class instantiation
       const bodyType = extractBodyTypeFromCommand(command[0]);
@@ -259,7 +320,8 @@ const generateTestFile = (
     const body = commandMethodArguments
       .filter((x) => x == 'body')
       .map((x) => `fixtures.request.${commandCoordinates.join('.')}.` + x);
-    codeToReturn += `       const result = await new ${command[0]
+
+    codeToReturn += `const promise = new ${command[0]
       .replace(/:([a-zA-Z0-9]+)/g, `:fixtures.$1`)
       .replace(
         `${
@@ -271,24 +333,44 @@ const generateTestFile = (
           .map((x) => `fixtures.request.${commandCoordinates.join('.')}.` + x)
           .join(','),
       )}
-                            ${
-                              commandMethod.toUpperCase() == 'GET' ||
-                              commandMethod.toUpperCase() == 'DELETE'
-                                ? 'expect(result).toEqual(`/api/v1' + url + '`)'
-                                : 'expect(result.uri).toEqual(`/api/v1' +
-                                  url +
-                                  '`)'
-                            }
-                            ${
-                              commandMethod.toUpperCase() == 'PUT' ||
-                              commandMethod.toUpperCase() == 'POST'
-                                ? 'expect(result.body).toEqual(' +
-                                  body +
-                                  '.body)'
-                                : ''
-                            }
-        `;
-    codeToReturn += `   })
+
+      `;
+    codeToReturn += `
+      mockAxios.mockResponseFor({url: \`${url}\`},axiosResponse);
+
+      expect(mockAxios.${commandMethod}).toHaveBeenCalledWith(\`${url}\`${
+      body.join() == '' ? '' : ', JSON.stringify(' + body.join() + ')'
+    })
+
+    
+      const result:${_.capitalize(
+        className,
+      )}Types.${extractResponseTypeFromCommand(command[0])} = await promise
+      
+      expect(result).toEqual(
+        response,
+      );
+      `;
+    //                     ${
+    //                       commandMethod.toUpperCase() == 'GET' ||
+    //                       commandMethod.toUpperCase() == 'DELETE'
+    //                         ? 'expect(result).toEqual(`/api/v1' + url + '`)'
+    //                         : 'expect(result.uri).toEqual(`/api/v1' +
+    //                           url +
+    //                           '`)'
+    //                     }
+    //                     ${
+    //                       commandMethod.toUpperCase() == 'PUT' ||
+    //                       commandMethod.toUpperCase() == 'POST'
+    //                         ? 'expect(result.body).toEqual(' + body + ')'
+    //                         : ''
+    //                     }
+    // `;
+    codeToReturn += `
+  } catch(err) {
+    throw new Error(err)
+  }
+   })
         `;
   });
   codeToReturn += `})
