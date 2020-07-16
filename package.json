@@ -20,6 +20,8 @@
     "snyk-test": "snyk test",
     "convert-to-swagger": "npx apib2swagger -i ./snyk.apib -o ./snyk.json",
     "prepare-swagger": "node dist/preprocessors/prepare.js > snyk-prepared.json",
+    "clean-generated-classes": "rm src/lib/client/generated/*.ts",
+    "clean-for-release": "rm -rf src/lib/generators && rm -rf src/lib/preprocessors && rm snyk.apib snyk.json snyk-prepared.json",
     "generate-classes": "node dist/generators/generate.js",
     "generate-classes-for-test": "node dist/generators/generate.js test",
     "generate-test-cases": "node dist/generators/generateTestCases.js",
