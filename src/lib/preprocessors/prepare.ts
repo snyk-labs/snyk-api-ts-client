@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as _ from 'lodash';
 
+const jsonQ = require('jsonq');
 interface Class {
   name: string;
   methods?: Array<Method>;
@@ -21,6 +22,7 @@ interface Method {
   params: Array<Parameters>;
   qsParams: Array<Parameters>;
   body?: object;
+  response?: Response;
 }
 
 interface Parameters {
@@ -28,6 +30,19 @@ interface Parameters {
   type: string;
   required: boolean;
   description: string;
+}
+
+interface Response {
+  type: responseType;
+  schema?: object;
+  header?: object;
+  examples?: object;
+}
+
+enum responseType {
+  'header' = 'header',
+  'bodyless' = 'bodyless',
+  'custom' = 'custom',
 }
 
 let snyk: any, paths: any;
@@ -102,12 +117,44 @@ const extractClassAndParamFromEndpoint = (
         throw new Error('wtf');
       }
     });
+    let response: Response = { type: responseType.custom };
+
+    switch (Object.keys(methodDetails.responses)[0]) {
+      case '201':
+      case '204':
+      case '303':
+        response.type = responseType.header;
+        response.header =
+          methodDetails.responses[
+            Object.keys(methodDetails.responses)[0]
+          ].header;
+        break;
+      case '200':
+        if (
+          methodDetails.responses[Object.keys(methodDetails.responses)[0]]
+            .schema
+        ) {
+          response.type = responseType.custom;
+          response.schema =
+            methodDetails.responses[
+              Object.keys(methodDetails.responses)[0]
+            ].schema;
+          response.examples =
+            methodDetails.responses[
+              Object.keys(methodDetails.responses)[0]
+            ].examples;
+        } else {
+          response.type = responseType.bodyless;
+        }
+    }
+
     methodsArray.push({
       verb: path,
       url: fullPath,
       params: parameters,
       qsParams: qsParameters,
       body: body,
+      response: response,
     });
   });
 
@@ -212,9 +259,75 @@ const convertClassToConsolidatedClass = (
   return consolidatedClassToReturn;
 };
 
+const convertReferencesToPropertiesFromDefinitions = (
+  definitions: any,
+  objectToConvert: any,
+): any => {
+  const objectToConvertJsonQ = jsonQ(objectToConvert);
+  const refId: string = objectToConvertJsonQ
+    .find('$ref')
+    .value()[0]
+    .replace('#/definitions/', '');
+  let nestedRefs = jsonQ(definitions[`${refId}`]['patternProperties']).find(
+    '$ref',
+  );
+  if (nestedRefs.length > 0) {
+    return convertReferencesToPropertiesFromDefinitions(
+      definitions,
+      definitions[`${refId}`]['patternProperties'],
+    );
+    // return {
+    //   properties: convertReferencesToPropertiesFromDefinitions(
+    //     definitions,
+    //     definitions[`${refId}`]['patternProperties'],
+    //   ),
+    //   type: definitions[`${refId}`]['type'],
+    // };
+  } else {
+    return {
+      properties: definitions[`${refId}`]['patternProperties'],
+      type: definitions[`${refId}`]['type'],
+    };
+  }
+};
+
+const consolidateReferences = (paths: any): any => {
+  let jsonObjectPaths = jsonQ(paths);
+  let preprocessedPaths = paths;
+  const schemasWithReferences: Array<any> = jsonObjectPaths
+    .find('schema', function () {
+      //@ts-ignore
+      return this['$ref'] != null;
+      //@ts-ignore
+    })
+    // @ts-ignore
+    .each(function (index, path, value) {
+      const definitions = value['definitions'];
+      jsonObjectPaths.setPathValue(
+        path,
+        convertReferencesToPropertiesFromDefinitions(definitions, value),
+      );
+    }); //.value()
+  // schemasWithReferences.forEach(schema => {
+
+  //   const definitions = schema["definitions"]
+  //   console.log(JSON.stringify(convertReferencesToPropertiesFromDefinitions(definitions,schema)))
+
+  // })
+
+  preprocessedPaths = jsonObjectPaths.value()[0];
+
+  // search for all schemas
+  // filter out all those without $ref in it
+  // For each ref, return patternproperties into properties
+  // check for nested ref to apply the same
+  return preprocessedPaths;
+};
+
 const main = (jsonPath: string) => {
   snyk = fs.readFileSync(jsonPath).toString();
   paths = JSON.parse(snyk).paths;
+  paths = consolidateReferences(paths);
   Object.keys(paths).forEach((path) => {
     const verbs = Object.keys(paths[path]);
     const splitEndpoint = path.split('/').filter((x) => x);

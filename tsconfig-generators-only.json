@@ -10,5 +10,9 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "include": ["./src/lib/generators/*","./src/lib/preprocessors/*","./src/lib/utils/*"]
+  "include": [
+    "./src/lib/generators/*",
+    "./src/lib/preprocessors/*",
+    "./src/lib/utils/*"
+  ]
 }

@@ -14,7 +14,7 @@ jobs:
             - run: npm run build-generators-only
             - run: npm run convert-to-swagger
             - run: npm run prepare-swagger
-            - run: npm run generate-classes
+            - run: npm run generate-classes test
             - run: npm run format
             - run: npm run build
             - run: npm run generate-test-cases
@@ -25,6 +25,9 @@ jobs:
                 fail-on-issues: true
                 monitor-on-build: true
                 token-variable: SNYK_TOKEN
+            - run: npm run clean-generated-classes
+            - run: npm run generate-classes
+            - run: npm run clean-for-release
             - run: npx semantic-release
     build-test:
         docker:
@@ -37,7 +40,7 @@ jobs:
             - run: npm run build-generators-only
             - run: npm run convert-to-swagger
             - run: npm run prepare-swagger
-            - run: npm run generate-classes
+            - run: npm run generate-classes test
             - run: npm run format
             - run: npm run build
             - run: npm run generate-test-cases
