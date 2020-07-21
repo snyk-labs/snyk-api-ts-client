@@ -39,7 +39,7 @@ import { ProjectsPostBodyType } from 'snyk-api-ts-client/dist/client/generated/o
 
 
 const main = async () => {
-    const body: ProjectsPostBodyType = {body: {}}
+    const body: ProjectsPostBodyType = {filters: {}}
     const result = await new Org({orgId: '12345678-1234-1234-1234-123456789012'}).projects.post(body)
     console.log(result)
 }
