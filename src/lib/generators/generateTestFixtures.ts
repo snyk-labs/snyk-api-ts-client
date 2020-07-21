@@ -42,7 +42,7 @@ const getFixtureIntoObject = (fixture: string): Object => {
     );
   } else {
     if (splitFixture[0] == 'body') {
-      Object(currentObject)[splitFixture[0]] = { body: { filter: {} } };
+      Object(currentObject)[splitFixture[0]] = { filter: {} };
     } else {
       Object(currentObject)[splitFixture[0]] = '123';
     }

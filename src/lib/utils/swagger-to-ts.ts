@@ -40,7 +40,7 @@ export type OpenAPI3Reference =
 //   ? propertyMapper(schema.components.schemas, options.propertyMapper)
 //   : schema.components.schemas;
 
-const convert = (node: OpenAPI3SchemaObject) => {
+const convert = (node: OpenAPI3SchemaObject, interfaceName: string) => {
   function transform(node: OpenAPI3SchemaObject): string {
     switch (nodeType(node)) {
       case 'string':
@@ -55,9 +55,26 @@ const convert = (node: OpenAPI3SchemaObject) => {
         return tsUnionOf((node.oneOf as any[]).map(transform));
       }
       case 'anyOf': {
-        return tsIntersectionOf(
-          (node.anyOf as any[]).map((anyOf) => tsPartial(transform(anyOf))),
+        // return tsIntersectionOf(
+        //   (node.anyOf as any[]).map((anyOf) => tsPartial(transform(anyOf))),
+        // );
+
+        // iterate over the node.anyOf, create the interfaces for each partial
+        // and have a type being the interface joined by |
+        let interfaceCodeToReturn = (node.anyOf as any[]).map(
+          (anyOf, index) => `
+        interface ${interfaceName}${index + 1} ${transform(anyOf)}
+        `,
         );
+
+        interfaceCodeToReturn.unshift(`export type ${interfaceName} = ${(node.anyOf as any[])
+          .map((value, index) => `${interfaceName + (index + 1)}`)
+          .join(' & ')} 
+        `);
+        return interfaceCodeToReturn.join('---');
+        // return tsIntersectionOf(
+        //   (node.anyOf as any[]).map((anyOf) => tsPartial(transform(anyOf))),
+        // );
       }
       case 'object': {
         // if empty object, then return generic map type
@@ -133,4 +150,25 @@ const convert = (node: OpenAPI3SchemaObject) => {
   //     `;
 };
 
-export { convert };
+const getTsInterfaceFromSwaggerSchema = (
+  interfaceName: string,
+  schema: any,
+): string[] => {
+  const convertedSchema = `${convert(
+    schema as OpenAPI3Reference,
+    interfaceName,
+  )}
+            `;
+
+  if (convertedSchema.split('---').length <= 1) {
+    return [
+      `
+    export interface ${interfaceName} ${convertedSchema}
+    `,
+    ];
+  } else {
+    return convertedSchema.split('---');
+  }
+};
+
+export { convert, getTsInterfaceFromSwaggerSchema };

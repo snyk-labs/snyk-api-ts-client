@@ -17,6 +17,7 @@ interface Method {
   params: Array<Parameters>;
   qsParams: Array<Parameters>;
   body?: object;
+  response?: Response;
 }
 
 interface Parameters {
@@ -31,6 +32,19 @@ interface PreparedMethod {
   argsList: Array<string>;
   qsList?: Array<string>;
   url: string;
+  response?: Response;
+}
+
+interface Response {
+  type: responseType;
+  schema?: object;
+  header?: object;
+}
+
+enum responseType {
+  'header' = 'header',
+  'bodyless' = 'bodyless',
+  'custom' = 'custom',
 }
 
 const preparedJson = fs.readFileSync('./snyk-prepared.json').toString();
@@ -44,6 +58,7 @@ const generateClass = (
 
   codeToReturn += `${generateClassInterface(classToGenerate, isRootClass)}`;
   codeToReturn += `${generateBodyInterfaces(classToGenerate)}`;
+  codeToReturn += `${generateResponseInterfaces(classToGenerate)}`;
 
   if (classToGenerate) {
     if (isRootClass) {
@@ -120,17 +135,86 @@ const generateBodyInterfaces = (
 
     methodsArray.forEach((method) => {
       if (!_.isEmpty(method.body)) {
-        codeToReturn += `export interface ${
+        // codeToReturn += `export interface ${
+        //   utils.formatClassName(classToGenerateBodyInterfacesFor.name) +
+        //   _.capitalize(method.verb) +
+        //   'BodyType'
+        // } {
+        //             ${swaggerToTS.convert(
+        //               method.body as swaggerToTS.OpenAPI3Reference,
+        //             )}
+        //         }
+
+        //         `;
+        codeToReturn += swaggerToTS.getTsInterfaceFromSwaggerSchema(
           utils.formatClassName(classToGenerateBodyInterfacesFor.name) +
-          _.capitalize(method.verb) +
-          'BodyType'
-        } {
-                    body: ${swaggerToTS.convert(
-                      method.body as swaggerToTS.OpenAPI3Reference,
-                    )}
-                }
-                
-                `;
+            _.capitalize(method.verb) +
+            'BodyType',
+          method.body,
+        ).join(`
+        `);
+      }
+    });
+  }
+  return codeToReturn;
+};
+
+const generateResponseInterfaces = (
+  classToGenerateResponseInterfacesFor: ConsolidatedClass,
+) => {
+  let codeToReturn: string = '';
+
+  if (classToGenerateResponseInterfacesFor.methods) {
+    const methodsArray = classToGenerateResponseInterfacesFor.methods;
+
+    methodsArray.forEach((method) => {
+      if (!_.isEmpty(method.response)) {
+        switch (method.response?.type) {
+          case 'custom':
+            // codeToReturn += `export interface ${
+            //   utils.formatClassName(classToGenerateResponseInterfacesFor.name) +
+            //   _.capitalize(method.verb) +
+            //   'ResponseType'
+            // } {
+            //               ${swaggerToTS.convert(
+            //                 method.response
+            //                   .schema as swaggerToTS.OpenAPI3Reference,
+            //               )}
+            //           }
+
+            //           `;
+            const interfaceName =
+              utils.formatClassName(classToGenerateResponseInterfacesFor.name) +
+              _.capitalize(method.verb) +
+              'ResponseType';
+            const interfacesString: string[] = swaggerToTS.getTsInterfaceFromSwaggerSchema(
+              interfaceName,
+              method.response.schema,
+            );
+            codeToReturn += interfacesString.join(`
+            `);
+
+            break;
+          case 'header':
+            codeToReturn += `export interface ${
+              utils.formatClassName(classToGenerateResponseInterfacesFor.name) +
+              _.capitalize(method.verb) +
+              'ResponseType'
+            } {
+                          header: ${method.response.header}
+                      }
+                      
+                      `;
+            break;
+          case 'bodyless':
+            codeToReturn += `export type ${
+              utils.formatClassName(classToGenerateResponseInterfacesFor.name) +
+              _.capitalize(method.verb) +
+              'ResponseType'
+            } = any
+            `;
+            break;
+        }
       }
     });
   }
@@ -347,6 +431,7 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
         name: method.verb,
         argsList: argsList,
         url: urlForPreparedMethod,
+        response: method.response,
       };
 
       if (methodsMap.has(method.verb)) {
@@ -409,6 +494,7 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
           name: method.verb,
           argsList: currentMethod.argsList,
           url: url,
+          response: currentMethod.response,
         };
         methodsMap.set(method.verb, updatedMethod);
       } else {
@@ -417,6 +503,7 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
           name: method.verb,
           argsList: currentMethod.argsList,
           url: url,
+          response: currentMethod.response,
         };
         methodsMap.set(method.verb, updatedMethod);
       }
@@ -444,9 +531,15 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
                     urlQueryParams.push('${qsParameterName}='+${qsParameterName})
                 }\n`;
       });
-
       codeToReturn += `
-            async ${method.name} (${method.argsList}) {
+            async ${method.name} (${method.argsList}):${
+        method.response?.type == 'bodyless'
+          ? 'Promise<any>'
+          : 'Promise<' +
+            utils.formatClassName(classToGenerateMethodsFor.name) +
+            utils.formatClassName(method.name) +
+            'ResponseType>'
+      } {
                 let url = ''
                 let urlQueryParams: Array<string> = []
                 ${method.url.startsWith('if') ? '' : 'url = '}${method.url}
@@ -460,7 +553,7 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
                       method.name
                     }', url: url ${
         method.argsList.map((x) => x.split(':')[0]).includes('body')
-          ? ',body : JSON.stringify(body.body)'
+          ? ',body : JSON.stringify(body)'
           : ''
       }})
                     if(!Object(this.currentContext)['fullResponse'] && result.data){
@@ -482,13 +575,17 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
     return '';
   }
 };
-
+let requestManagerSettings = '';
+console.log('INFORMATION => Generating classes with test settings !');
+if (process.argv.slice(2).length > 0) {
+  requestManagerSettings = `{ burstSize: 100, period: 100, maxRetryCount: 10 }`;
+}
 const parsedJSON = JSON.parse(preparedJson) as Array<ConsolidatedClass>;
 const initLines = `
 import { ClientError } from '../errors/clientError'
 import { requestsManager } from 'snyk-request-manager'
 
-const requestManager = new requestsManager()
+const requestManager = new requestsManager(${requestManagerSettings})
 
 `;
 
