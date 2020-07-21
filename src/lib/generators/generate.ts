@@ -575,10 +575,10 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
     return '';
   }
 };
-let requestManagerSettings = '';
-console.log('INFORMATION => Generating classes with test settings !');
+let requestManagerSettings = "{userAgentPrefix: 'snyk-api-ts-client'}";
 if (process.argv.slice(2).length > 0) {
-  requestManagerSettings = `{ burstSize: 100, period: 100, maxRetryCount: 10 }`;
+  console.log('INFORMATION => Generating classes with test settings !');
+  requestManagerSettings = `{ burstSize: 100, period: 100, maxRetryCount: 10, userAgentPrefix: 'snyk-api-ts-client' }`;
 }
 const parsedJSON = JSON.parse(preparedJson) as Array<ConsolidatedClass>;
 const initLines = `
