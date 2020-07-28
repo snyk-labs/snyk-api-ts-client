@@ -588,6 +588,7 @@ import { requestsManager } from 'snyk-request-manager'
 const requestManager = new requestsManager(${requestManagerSettings})
 
 `;
+console.log('fdfd')
 
 parsedJSON.forEach((classItem) => {
   fs.writeFileSync(
