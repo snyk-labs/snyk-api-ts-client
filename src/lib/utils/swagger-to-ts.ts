@@ -83,6 +83,9 @@ const convert = (node: OpenAPI3SchemaObject, interfaceName: string) => {
           !node.allOf &&
           !node.additionalProperties
         ) {
+          if (node.type && node.type != 'object') {
+            return `${node.type[0]} | ${node.type[1]}`;
+          }
           return `{ [key: string]: any }`;
         }
 
