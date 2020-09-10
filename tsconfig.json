@@ -2,13 +2,16 @@
   "compilerOptions": {
     "outDir": "./dist",
     "pretty": true,
-    "target": "esnext",
+    "target": "es2017",
     "module": "commonjs",
     "sourceMap": true,
     "declaration": true,
     "importHelpers": true,
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "lib": [
+      "esnext"
+    ],
   },
   "include": ["./src/lib/**/*"]
 }
