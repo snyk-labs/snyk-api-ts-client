@@ -31,6 +31,7 @@ interface PreparedMethod {
   name: string;
   argsList: Array<string>;
   qsList?: Array<string>;
+  paramList?: Array<string>,
   url: string;
   response?: Response;
 }
@@ -429,12 +430,14 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
 
       const currentMethod: PreparedMethod = {
         name: method.verb,
+        paramList: paramsCode,
         argsList: argsList,
         url: urlForPreparedMethod,
         response: method.response,
       };
-
+      // console.log(method)
       if (methodsMap.has(method.verb)) {
+        
         let paramList = _.uniq(method.params.concat(method.qsParams));
         let url = method.url;
 
@@ -442,8 +445,13 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
         let existingUrl = methodsMap.get(method.verb)?.url;
 
         let finalMethodParamList: string[] = [];
-
-        if (existingMethodParamList.length > paramList.length) {
+        if(existingMethodParamList.length == 0 &&  paramList.length == 0) {
+          // Just passing through if no parameters but only different values in the path
+          // so far only /user/{usedId}, with userId=me being a special case called out
+          // in other words, userId being 'me' or another value if handled in the class constructor
+          // so no need to tweak the url
+          url = `${existingUrl}`
+      } else if (existingMethodParamList.length > paramList.length) {
           finalMethodParamList = existingMethodParamList;
           const paramListDifference = _.difference(
             existingMethodParamList,
@@ -501,6 +509,7 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
         const url = `${currentMethod.url}`;
         const updatedMethod: PreparedMethod = {
           name: method.verb,
+          paramList: currentMethod.paramList,
           argsList: currentMethod.argsList,
           url: url,
           response: currentMethod.response,
@@ -588,7 +597,7 @@ import { requestsManager } from 'snyk-request-manager'
 const requestManager = new requestsManager(${requestManagerSettings})
 
 `;
-console.log('fdfd')
+
 
 parsedJSON.forEach((classItem) => {
   fs.writeFileSync(
