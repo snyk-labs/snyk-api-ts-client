@@ -81,11 +81,11 @@ const generateClass = (
       isRootClass,
     )}
          ${generateConstructors(classToGenerate, parentClassType, isRootClass)}
-    
-         
+
+
 
          ${generateMethods(classToGenerate)}
-            
+
     }
     ${generateSubClasses(classToGenerate, isRootClass)}
     `;
@@ -204,7 +204,7 @@ const generateResponseInterfaces = (
             } {
                           header: ${method.response.header}
                       }
-                      
+
                       `;
             break;
           case 'bodyless':
@@ -269,7 +269,7 @@ const generateSubClasses = (
   if (subClassArray) {
     subClassArray.forEach((subClass) => {
       codeToReturn += `${generateClass(subClass, classType, false)}
-            
+
             `;
     });
   }
@@ -294,7 +294,7 @@ const generateConstructors = (
   if (!isRootClass) {
     constructorsDeclaration.push(`parentContext: Object`);
     constructorsParameters += `
-        
+
         const properties = Object.getOwnPropertyNames(parentContext)
         properties.forEach(property => {
             Object(this.currentContext)[property] = Object(parentContext)[property]
@@ -453,7 +453,6 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
         url: urlForPreparedMethod,
         response: method.response,
       };
-      // console.log(method)
       if (methodsMap.has(method.verb)) {
         let paramList = _.uniq(method.params.concat(method.qsParams));
         let url = method.url;
@@ -553,7 +552,7 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
       let qsIfStatements = '';
       qsParametersNamesList.forEach((qsParameterName) => {
         qsIfStatements += `
-                if(${qsParameterName}){ 
+                if(${qsParameterName}){
                     urlQueryParams.push('${qsParameterName}='+${qsParameterName})
                 }\n`;
       });
@@ -582,7 +581,7 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
                 if(urlQueryParams.length > 0){
                     url += \`?\${urlQueryParams.join("&")}\`
                 }
-                
+
                 try {
                     const result = await requestManager.request({verb: '${
                       method.name
@@ -596,11 +595,11 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
                     } else {
                         return result
                     }
-                    
+
                 } catch (err) {
                     throw new ClientError(err)
                 }
-                
+
             }
             `;
     });
