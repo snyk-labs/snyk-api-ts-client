@@ -31,6 +31,7 @@ interface PreparedMethod {
   name: string;
   argsList: Array<string>;
   qsList?: Array<string>;
+  paramList?: Array<string>;
   url: string;
   response?: Response;
 }
@@ -80,11 +81,11 @@ const generateClass = (
       isRootClass,
     )}
          ${generateConstructors(classToGenerate, parentClassType, isRootClass)}
-    
-         
+
+
 
          ${generateMethods(classToGenerate)}
-            
+
     }
     ${generateSubClasses(classToGenerate, isRootClass)}
     `;
@@ -203,7 +204,7 @@ const generateResponseInterfaces = (
             } {
                           header: ${method.response.header}
                       }
-                      
+
                       `;
             break;
           case 'bodyless':
@@ -268,7 +269,7 @@ const generateSubClasses = (
   if (subClassArray) {
     subClassArray.forEach((subClass) => {
       codeToReturn += `${generateClass(subClass, classType, false)}
-            
+
             `;
     });
   }
@@ -293,7 +294,7 @@ const generateConstructors = (
   if (!isRootClass) {
     constructorsDeclaration.push(`parentContext: Object`);
     constructorsParameters += `
-        
+
         const properties = Object.getOwnPropertyNames(parentContext)
         properties.forEach(property => {
             Object(this.currentContext)[property] = Object(parentContext)[property]
@@ -306,6 +307,22 @@ const generateConstructors = (
         `;
   }
   let noInterface: boolean = false;
+  let optionalConstructorParam: string = '';
+  if (
+    classToGenerateConstructorsFor.methods &&
+    classToGenerateConstructorsFor.methods.length > 0
+  ) {
+    if (
+      classToGenerateConstructorsFor.methods.some(
+        (method) => method.params.length == 0,
+      )
+    ) {
+      // the root class constructor argument should therefore be optional
+      // as there might be methods not needing it (POST /org for example)
+      optionalConstructorParam = '?';
+    }
+  }
+
   if (
     classToGenerateConstructorsFor.param &&
     classToGenerateConstructorsFor.param.filter((x) => x).length > 0
@@ -313,7 +330,7 @@ const generateConstructors = (
     constructorsDeclaration.push(
       `${utils.formatClassName(
         classToGenerateConstructorsFor.name,
-      )}param:${utils
+      )}param${optionalConstructorParam}:${utils
         .formatClassName(classToGenerateConstructorsFor.name)
         .toLowerCase()}Class`,
     );
@@ -338,7 +355,9 @@ const generateConstructors = (
                       parameter,
                     )} = ${utils.formatClassName(
           classToGenerateConstructorsFor.name,
-        )}param.${utils.removeCurlyBraces(parameter)} || ${defaultValue}
+        )}param${optionalConstructorParam}.${utils.removeCurlyBraces(
+          parameter,
+        )} || ${defaultValue}
                 `;
       }
     });
@@ -429,11 +448,11 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
 
       const currentMethod: PreparedMethod = {
         name: method.verb,
+        paramList: paramsCode,
         argsList: argsList,
         url: urlForPreparedMethod,
         response: method.response,
       };
-
       if (methodsMap.has(method.verb)) {
         let paramList = _.uniq(method.params.concat(method.qsParams));
         let url = method.url;
@@ -442,8 +461,13 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
         let existingUrl = methodsMap.get(method.verb)?.url;
 
         let finalMethodParamList: string[] = [];
-
-        if (existingMethodParamList.length > paramList.length) {
+        if (existingMethodParamList.length == 0 && paramList.length == 0) {
+          // Just passing through if no parameters but only different values in the path
+          // so far only /user/{usedId}, with userId=me being a special case called out
+          // in other words, userId being 'me' or another value if handled in the class constructor
+          // so no need to tweak the url
+          url = `${existingUrl}`;
+        } else if (existingMethodParamList.length > paramList.length) {
           finalMethodParamList = existingMethodParamList;
           const paramListDifference = _.difference(
             existingMethodParamList,
@@ -501,6 +525,7 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
         const url = `${currentMethod.url}`;
         const updatedMethod: PreparedMethod = {
           name: method.verb,
+          paramList: currentMethod.paramList,
           argsList: currentMethod.argsList,
           url: url,
           response: currentMethod.response,
@@ -527,10 +552,19 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
       let qsIfStatements = '';
       qsParametersNamesList.forEach((qsParameterName) => {
         qsIfStatements += `
-                if(${qsParameterName}){ 
+                if(${qsParameterName}){
                     urlQueryParams.push('${qsParameterName}='+${qsParameterName})
                 }\n`;
       });
+
+      let emptyBodyNeeded = false;
+      if (
+        (method.name == 'post' || method.name == 'put') &&
+        !method.argsList.map((x) => x.split(':')[0]).includes('body')
+      ) {
+        emptyBodyNeeded = true;
+      }
+
       codeToReturn += `
             async ${method.name} (${method.argsList}):${
         method.response?.type == 'bodyless'
@@ -547,25 +581,25 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
                 if(urlQueryParams.length > 0){
                     url += \`?\${urlQueryParams.join("&")}\`
                 }
-                
+
                 try {
                     const result = await requestManager.request({verb: '${
                       method.name
                     }', url: url ${
         method.argsList.map((x) => x.split(':')[0]).includes('body')
           ? ',body : JSON.stringify(body)'
-          : ''
+          : `${emptyBodyNeeded ? ', body: JSON.stringify({})' : ''}`
       }})
                     if(!Object(this.currentContext)['fullResponse'] && result.data){
                         return result.data
                     } else {
                         return result
                     }
-                    
+
                 } catch (err) {
                     throw new ClientError(err)
                 }
-                
+
             }
             `;
     });
@@ -588,7 +622,6 @@ import { requestsManager } from 'snyk-request-manager'
 const requestManager = new requestsManager(${requestManagerSettings})
 
 `;
-console.log('fdfd')
 
 parsedJSON.forEach((classItem) => {
   fs.writeFileSync(

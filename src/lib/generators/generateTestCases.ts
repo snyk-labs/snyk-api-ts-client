@@ -92,7 +92,10 @@ const extractCommandDetailsFromClass = (
       });
     });
 
-    if (method.verb == 'put' || method.verb == 'post') {
+    if (
+      (method.verb == 'put' || method.verb == 'post') &&
+      !_.isEmpty(method.body)
+    ) {
       listOfParams.unshift('body');
     }
 
@@ -293,13 +296,13 @@ const generateTestFile = (
     };
     `;
 
-    if (commandMethod == 'put' || commandMethod == 'post') {
-      // extract the namespace(s) from command after the first class instantiation
-      const bodyType = extractBodyTypeFromCommand(command[0]);
+    // if (commandMethod == 'put' || commandMethod == 'post') {
+    //   // extract the namespace(s) from command after the first class instantiation
+    //   const bodyType = extractBodyTypeFromCommand(command[0]);
 
-      //   codeToReturn += `const body: ${bodyType} = {body:fixtures.request.body.${commandCoordinates.join('.')}}
-      //         `;
-    }
+    //   //   codeToReturn += `const body: ${bodyType} = {body:fixtures.request.body.${commandCoordinates.join('.')}}
+    //   //         `;
+    // }
     let url = command[1].replace(/{/g, '${fixtures.request.');
 
     if (
@@ -339,7 +342,13 @@ const generateTestFile = (
       mockAxios.mockResponseFor({url: \`${url}\`},axiosResponse);
 
       expect(mockAxios.${commandMethod}).toHaveBeenCalledWith(\`${url}\`${
-      body.join() == '' ? '' : ', JSON.stringify(' + body.join() + ')'
+      body.join() == ''
+        ? `${
+            commandMethod == 'post' || commandMethod == 'put'
+              ? ',JSON.stringify({})'
+              : ''
+          }`
+        : ', JSON.stringify(' + body.join() + ')'
     })
 
     
