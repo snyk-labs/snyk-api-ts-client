@@ -48,7 +48,10 @@ enum responseType {
   'custom' = 'custom',
 }
 
+let currentRootClassName = '';
 const preparedJson = fs.readFileSync('./snyk-prepared.json').toString();
+
+let abstractionImportsArray: Array<string> = [];
 
 const generateClass = (
   classToGenerate: ConsolidatedClass,
@@ -61,8 +64,13 @@ const generateClass = (
   codeToReturn += `${generateBodyInterfaces(classToGenerate)}`;
   codeToReturn += `${generateResponseInterfaces(classToGenerate)}`;
 
+  abstractionImportsArray.push(
+    generateImportsForAbstractionMethods(classToGenerate),
+  );
+
   if (classToGenerate) {
     if (isRootClass) {
+      currentRootClassName = utils.formatClassName(classToGenerate.name);
       codeToReturn += `export class ${utils.formatClassName(
         classToGenerate.name,
       )} {\n`;
@@ -85,6 +93,7 @@ const generateClass = (
 
 
          ${generateMethods(classToGenerate)}
+         ${integrateAbstractionMethods(classToGenerate)}
 
     }
     ${generateSubClasses(classToGenerate, isRootClass)}
@@ -609,6 +618,115 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
     return '';
   }
 };
+
+const generateImportsForAbstractionMethods = (
+  classToIntegrateAbstractionMethodsIn: ConsolidatedClass,
+) => {
+  const className = utils
+    .formatClassName(classToIntegrateAbstractionMethodsIn.name)
+    .toLowerCase();
+  if (currentRootClassName != '') {
+    const currentAbstractionPath =
+      require('path').resolve(__dirname, '..') +
+      `/client/abstraction/${utils
+        .formatClassName(currentRootClassName)
+        .toLowerCase()}`;
+    if (
+      fs.existsSync(currentAbstractionPath) &&
+      fs.existsSync(currentAbstractionPath + `/${className}.js`)
+    ) {
+      const exportedAbstractionObjects = Object.keys(
+        require(currentAbstractionPath + `/${className}.js`),
+      );
+
+      const currentAbstractionTypescriptPath =
+        require('path').resolve(__dirname, '../../') +
+        `/src/lib/client/abstraction/${utils
+          .formatClassName(currentRootClassName)
+          .toLowerCase()}`;
+
+      const abstractionSrcCode = fs.readFileSync(
+        currentAbstractionTypescriptPath + `/${className}.ts`,
+      );
+      const typeOrInterfaceRegex = /[^\/\/ ]export (type|interface) ([a-zA-Z0-9]+)/g;
+      const typeOrInterfaceArray = [
+        ...abstractionSrcCode.toString().matchAll(typeOrInterfaceRegex),
+      ];
+      typeOrInterfaceArray.forEach((exportedTypeOrInterface) => {
+        if (
+          exportedAbstractionObjects.indexOf(exportedAbstractionObjects[2]) < 0
+        ) {
+          exportedAbstractionObjects.push(exportedTypeOrInterface[2]);
+        }
+      });
+
+      return `import { ${exportedAbstractionObjects.join(
+        ', ',
+      )} } from '../abstraction/${utils
+        .formatClassName(currentRootClassName)
+        .toLowerCase()}/${className}'`;
+    }
+  }
+  return '';
+};
+
+const integrateAbstractionMethods = (
+  classToIntegrateAbstractionMethodsIn: ConsolidatedClass,
+) => {
+  const className = utils
+    .formatClassName(classToIntegrateAbstractionMethodsIn.name)
+    .toLowerCase();
+  if (currentRootClassName != '') {
+    const currentAbstractionPath =
+      require('path').resolve(__dirname, '..') +
+      `/client/abstraction/${utils
+        .formatClassName(currentRootClassName)
+        .toLowerCase()}`;
+    const currentAbstractionTypescriptPath =
+      require('path').resolve(__dirname, '../../') +
+      `/src/lib/client/abstraction/${utils
+        .formatClassName(currentRootClassName)
+        .toLowerCase()}`;
+    if (
+      fs.existsSync(currentAbstractionPath) &&
+      fs.existsSync(currentAbstractionPath + `/${className}.js`)
+    ) {
+      const exportedAbstractionMethods = Object.keys(
+        require(currentAbstractionPath + `/${className}.js`),
+      );
+      const abstractionSrcCode = fs.readFileSync(
+        currentAbstractionTypescriptPath + `/${className}.ts`,
+      );
+
+      return exportedAbstractionMethods
+        .map((abstractionMethodName) => {
+          let methodArguments = abstractionSrcCode
+            .toString()
+            .split(abstractionMethodName)[1];
+          methodArguments = methodArguments.split(')')[0];
+          methodArguments = methodArguments.split('(')[1];
+          methodArguments = methodArguments
+            .replace('classContext: Object,', '')
+            .replace(/ /g, '');
+
+          let returnType = abstractionSrcCode
+            .toString()
+            .split(abstractionMethodName)[1];
+          returnType = returnType.split(')')[1];
+          returnType = returnType.split(':')[1];
+          returnType = returnType.split('>')[0] + '>';
+
+          return `async ${abstractionMethodName} (${methodArguments}):${returnType} {
+          return await ${abstractionMethodName}(Object(this.currentContext)${
+            methodArguments != '' ? ',' : ''
+          }${methodArguments.split(':')[0]})
+        }`;
+        })
+        .join(`\n`);
+    }
+  }
+  return '';
+};
 let requestManagerSettings = "{userAgentPrefix: 'snyk-api-ts-client'}";
 if (process.argv.slice(2).length > 0) {
   console.log('INFORMATION => Generating classes with test settings !');
@@ -624,8 +742,9 @@ const requestManager = new requestsManager(${requestManagerSettings})
 `;
 
 parsedJSON.forEach((classItem) => {
+  const classCode = generateClass(classItem);
   fs.writeFileSync(
     path.join('./src/lib/client/generated/' + classItem.name + '.ts'),
-    initLines + generateClass(classItem),
+    initLines + abstractionImportsArray.join(`\n`) + classCode,
   );
 });
