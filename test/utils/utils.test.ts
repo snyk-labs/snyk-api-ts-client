@@ -6,7 +6,6 @@ afterEach(() => {
   mockAxios.reset();
 });
 
-
 const fixtures = fs.readFileSync('test/fixtures/utils/allProjects.json');
 
 describe('Testing utils', () => {

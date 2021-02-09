@@ -2,16 +2,15 @@
   "compilerOptions": {
     "outDir": "./dist",
     "pretty": true,
-    "target": "es2017",
+    "target": "es2019",
     "module": "commonjs",
     "sourceMap": true,
     "declaration": true,
     "importHelpers": true,
     "strict": true,
     "esModuleInterop": true,
-    "lib": [
-      "esnext"
-    ],
+    "lib": ["esnext"],
+    "types": ["node", "jest"]
   },
   "include": ["./src/lib/**/*"]
 }
