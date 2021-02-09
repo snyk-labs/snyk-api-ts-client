@@ -15,6 +15,7 @@
   "include": [
     "./src/lib/generators/*",
     "./src/lib/preprocessors/*",
-    "./src/lib/utils/*"
+    "./src/lib/utils/*",
+    "./src/lib/client/abstraction/**/*"
   ]
 }
