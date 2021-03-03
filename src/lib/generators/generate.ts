@@ -93,6 +93,7 @@ const generateClass = (
 
 
          ${generateMethods(classToGenerate)}
+         ${generatePaginationMethods(classToGenerate)}
          ${integrateAbstractionMethods(classToGenerate)}
 
     }
@@ -618,6 +619,254 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
     return '';
   }
 };
+const generatePaginationMethods = (
+  classToGenerateMethodsFor: ConsolidatedClass,
+) => {
+  let methodsJson = classToGenerateMethodsFor.methods;
+  let codeToReturn = '';
+
+  let methodsMap: Map<string, PreparedMethod> = new Map();
+  if (methodsJson) {
+    // @ts-ignore
+    methodsJson.forEach((method) => {
+      let argsList: Array<string> = [];
+
+      if (!_.isEmpty(method.body)) {
+        argsList.push(
+          `body: ${
+            utils.formatClassName(classToGenerateMethodsFor.name) +
+            _.capitalize(method.verb) +
+            'BodyType'
+          }`,
+        );
+      }
+
+      let paramsCode: Array<string> = [];
+      // @ts-ignore
+      method.params.forEach((param) => {
+        const required = !param.required ? '?' : '';
+        paramsCode.push(`${param.name}${required}: ${param.type}`);
+      });
+      //let qsParamsCode: Array<string> = [];
+      // @ts-ignore
+      method.qsParams.forEach((qsParam) => {
+        const required = !qsParam.required ? '?' : '';
+        //qsParamsCode.push(`${qsParam.name}${required}: ${qsParam.type}`);
+        argsList.push(`${qsParam.name}${required}: ${qsParam.type}`);
+      });
+
+      let urlForPreparedMethod = `\`${method.url
+        .toString()
+        .replace(/{/g, "${Object(this.currentContext)['")
+        .replace(/}/g, "']}")}\``;
+
+      const currentMethod: PreparedMethod = {
+        name: method.verb,
+        paramList: paramsCode,
+        argsList: argsList,
+        url: urlForPreparedMethod,
+        response: method.response,
+      };
+      if (methodsMap.has(method.verb)) {
+        let paramList = _.uniq(method.params.concat(method.qsParams));
+        let url = method.url;
+
+        let existingMethodParamList = methodsMap.get(method.verb)!.argsList;
+        let existingUrl = methodsMap.get(method.verb)?.url;
+
+        let finalMethodParamList: string[] = [];
+        if (existingMethodParamList.length == 0 && paramList.length == 0) {
+          // Just passing through if no parameters but only different values in the path
+          // so far only /user/{usedId}, with userId=me being a special case called out
+          // in other words, userId being 'me' or another value if handled in the class constructor
+          // so no need to tweak the url
+          url = `${existingUrl}`;
+        } else if (existingMethodParamList.length > paramList.length) {
+          finalMethodParamList = existingMethodParamList;
+          const paramListDifference = _.difference(
+            existingMethodParamList,
+            paramList.map((x) => `${x.name}?: ${x.type}`),
+          );
+          url = `if(${paramListDifference
+            .map((param) => {
+              let processedParam = param.split('?')[0].split(':')[0];
+              processedParam =
+                "`${Object(this.currentContext)['" +
+                processedParam +
+                "']}` != ''";
+              return processedParam;
+            })
+            .join(' && ')}){
+                        url = \`${url
+                          .toString()
+                          .replace(/{/g, "${Object(this.currentContext)['")
+                          .replace(/}/g, "']}")}\`
+                    } else {
+                        url = ${existingUrl}
+                    }`;
+        } else {
+          finalMethodParamList = paramList.map((x) => `${x.name}?: ${x.type}`);
+          const paramListDifference = _.difference(
+            paramList.map((x) => `${x.name}?: ${x.type}`),
+            existingMethodParamList,
+          );
+          url = `if(${paramListDifference
+            .map((param) => {
+              let processedParam = param.split('?')[0].split(':')[0];
+              processedParam =
+                "`${Object(this.currentContext)['" +
+                processedParam +
+                "']}` != ''";
+              return processedParam;
+            })
+            .join(' && ')}){
+                        url = \`${url
+                          .toString()
+                          .replace(/{/g, "${Object(this.currentContext)['")
+                          .replace(/}/g, "']}")}\`
+                    } else {
+                        url = ${existingUrl}
+                    }`;
+        }
+        const updatedMethod: PreparedMethod = {
+          name: method.verb,
+          argsList: currentMethod.argsList,
+          url: url,
+          response: currentMethod.response,
+        };
+        methodsMap.set(method.verb, updatedMethod);
+      } else {
+        const url = `${currentMethod.url}`;
+        const updatedMethod: PreparedMethod = {
+          name: method.verb,
+          paramList: currentMethod.paramList,
+          argsList: currentMethod.argsList,
+          url: url,
+          response: currentMethod.response,
+        };
+        methodsMap.set(method.verb, updatedMethod);
+      }
+    });
+
+    methodsMap.forEach((method) => {
+      let argsList: Array<string> = [];
+      let qsParametersNamesList: Array<string> = [];
+
+      if (method.argsList.some((x) => x.startsWith('page'))) {
+        if (method.argsList.some((x) => x.startsWith('body:'))) {
+          argsList.push('body: string');
+        }
+        method.argsList
+          .filter((x) => !x.startsWith('body:'))
+          .filter((x) => !x.startsWith('perPage'))
+          .filter((x) => !x.startsWith('page'))
+          .forEach((qsParameterName) => {
+            qsParametersNamesList.push(
+              qsParameterName.split(':')[0].replace('?', ''),
+            );
+          });
+        method.argsList = method.argsList
+          .filter((x) => !x.startsWith('perPage'))
+          .filter((x) => !x.startsWith('page'));
+        method.argsList.unshift('noLimitMode: boolean = false');
+
+        let qsIfStatements = '';
+        qsParametersNamesList.forEach((qsParameterName) => {
+          qsIfStatements += `
+                if(${qsParameterName}){
+                    urlQueryParams.push('${qsParameterName}='+${qsParameterName})
+                }\n`;
+        });
+
+        let emptyBodyNeeded = false;
+        if (
+          (method.name == 'post' || method.name == 'put') &&
+          !method.argsList.map((x) => x.split(':')[0]).includes('body')
+        ) {
+          emptyBodyNeeded = true;
+        }
+
+        codeToReturn += `
+            async ${method.name}All (${method.argsList}):${
+          method.response?.type == 'bodyless'
+            ? 'Promise<any>'
+            : 'Promise<' +
+              utils.formatClassName(classToGenerateMethodsFor.name) +
+              utils.formatClassName(method.name) +
+              'ResponseType[]>'
+        } {
+                let url = ''
+                let urlQueryParams: Array<string> = []
+                ${method.url.startsWith('if') ? '' : 'url = '}${method.url}
+                ${qsIfStatements}
+
+                let currentPage = 1;
+                const PAGELIMIT = 100
+                urlQueryParams.push('perPage=' + PAGELIMIT);
+
+                if(urlQueryParams.length > 0){
+                    url += \`?\${urlQueryParams.join("&")}\`
+                }
+
+                
+
+                const fullResponseUserSetting = Object(this.currentContext)['fullResponse']
+                Object(this.currentContext)['fullResponse'] = true
+                
+                try {
+                    const firstPageResult = await requestManager.request({verb: '${
+                      method.name
+                    }', url: url ${
+          method.argsList.map((x) => x.split(':')[0]).includes('body')
+            ? ',body : JSON.stringify(body)'
+            : `${emptyBodyNeeded ? ', body: JSON.stringify({})' : ''}`
+        }})
+                    Object(this.currentContext)['fullResponse'] = fullResponseUserSetting
+                    let totalPages = 1
+                    if(firstPageResult.headers.link){
+                      totalPages = utils.getTotalPaginationCount(firstPageResult.headers.link)
+                    }
+
+
+                    const bulkRequestArray = []
+                    for(let i=1; i<totalPages; i++){
+                      currentPage++
+                      bulkRequestArray.push({ verb: '${
+                        method.name
+                      }', url: url+\`&page=\${currentPage}\` ${
+          method.argsList.map((x) => x.split(':')[0]).includes('body')
+            ? ',body : JSON.stringify(body)'
+            : `${emptyBodyNeeded ? ', body: JSON.stringify({})' : ''}`
+        }})
+                      if(!noLimitMode && currentPage > PAGELIMIT){
+                        break;
+                      }
+                    }
+
+                    let bulkResultsSet: Object[] = []
+                    if(bulkRequestArray.length>0){
+                      bulkResultsSet = await requestManager.requestBulk(bulkRequestArray)
+                    }
+              
+                    const resultsSet = [firstPageResult.data, ...bulkResultsSet.map(x=> Object(x)['data'])]
+                    
+              
+                    return resultsSet
+
+                } catch (err) {
+                    throw new ClientError(err)
+                }
+
+            }
+            `;
+      }
+    });
+
+    return codeToReturn;
+  } else {
+    return '';
+  }
+};
 
 const generateImportsForAbstractionMethods = (
   classToIntegrateAbstractionMethodsIn: ConsolidatedClass,
@@ -736,6 +985,7 @@ const parsedJSON = JSON.parse(preparedJson) as Array<ConsolidatedClass>;
 const initLines = `
 import { ClientError } from '../errors/clientError'
 import { requestsManager } from 'snyk-request-manager'
+import * as utils from '../utils/utils'
 
 const requestManager = new requestsManager(${requestManagerSettings})
 

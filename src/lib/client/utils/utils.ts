@@ -22,3 +22,26 @@ export const getProjectUUID = async (
   }
   return selectedProjectArray[0].id;
 };
+
+export const getTotalPaginationCount = (linkHeaderLine: string): number => {
+  const regExp = /(\?|&)page=([0-9]+)/;
+  let count = 1;
+  let linkLastPage: string[] = linkHeaderLine
+    .replace('link: ', '')
+    .split(',')
+    .filter((link) => link.indexOf('rel=last') > 0);
+  if (
+    linkLastPage &&
+    linkLastPage.length == 1 &&
+    linkLastPage[0].match(regExp)
+  ) {
+    const lastPageMatch = linkLastPage[0].match(regExp);
+    count = lastPageMatch ? parseInt(lastPageMatch[2]) : 1;
+  } else {
+    throw new Error(
+      `Error unable to parse extract total page count from links in request header ${linkHeaderLine}`,
+    );
+  }
+
+  return count;
+};
