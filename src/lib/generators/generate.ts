@@ -179,7 +179,8 @@ const generateResponseInterfaces = (
     const methodsArray = classToGenerateResponseInterfacesFor.methods;
 
     methodsArray.forEach((method) => {
-      if (!_.isEmpty(method.response)) {
+      if (!_.isEmpty(method.response) && !codeToReturn.includes(`${
+        utils.formatClassName(classToGenerateResponseInterfacesFor.name) +_.capitalize(method.verb) + 'ResponseType'}`)) {
         switch (method.response?.type) {
           case 'custom':
             // codeToReturn += `export interface ${
