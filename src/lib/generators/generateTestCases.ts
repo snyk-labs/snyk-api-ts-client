@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as _ from 'lodash';
+import { type } from 'os';
 import { ConsolidatedClass } from './generate';
 
 export const generateTestCases = async (preparedJsonPath: string) => {
@@ -165,7 +166,10 @@ const extractBodyTypeFromCommand = (command: string): string => {
   return namespacePath != '' ? `${namespacePath}.${typeName}` : `${typeName}`;
 };
 
-const extractResponseTypeFromCommand = (command: string): string => {
+const extractResponseTypeFromCommand = (
+  command: string,
+  isPaginationMethod: boolean = false,
+): string => {
   const splitCommand = command.split('.');
   // length-1 of that array gives the number of subclasses we need to go through
   if (splitCommand.length > 2) {
@@ -178,13 +182,14 @@ const extractResponseTypeFromCommand = (command: string): string => {
   const namespacePath = readyToComposeCommandHierarchy
     .slice(0, readyToComposeCommandHierarchy.length - 2)
     .join('.');
-  const typeName =
+  let typeName =
     readyToComposeCommandHierarchy
       .slice(
         readyToComposeCommandHierarchy.length - 2,
         readyToComposeCommandHierarchy.length,
       )
       .join('') + 'ResponseType';
+  typeName = isPaginationMethod ? typeName.replace('all', '') : typeName;
   return namespacePath != '' ? `${namespacePath}.${typeName}` : `${typeName}`;
 };
 
@@ -198,13 +203,18 @@ const generateTestFile = (
     className,
   )}Types} from '../../src/lib/index'
     `;
+  // codeToReturn += `import { AxiosResponse } from "axios"
+  // import mockAxios from 'jest-mock-axios'
+  // afterEach(() => {
+  //   mockAxios.reset();
+  // });
+  // `;
   codeToReturn += `import { AxiosResponse } from "axios"
-  import mockAxios from 'jest-mock-axios'
-  afterEach(() => {
-    mockAxios.reset();
-  });
+  import nock from 'nock'
+  jest.unmock('axios');
   `;
   const namespacesToImport: Array<string> = [];
+
   commandList.forEach((command) => {
     if (command[0].indexOf('.put(') > 0 || command[0].indexOf('.post(') > 0) {
       const namespaceName = extractBodyTypeFromCommand(command[0])
@@ -214,7 +224,17 @@ const generateTestFile = (
         namespacesToImport.push(namespaceName);
       }
     }
+    if (command[0].indexOf('page') > 0) {
+      let commandPagination = [...command];
+      commandPagination[0] = commandPagination[0]
+        .replace('.post(', '.postAll(')
+        .replace('.put(', '.putAll(')
+        .replace('.get(', '.getAll(')
+        .replace('.delete(', '.deleteAll(');
+      commandList.push(commandPagination);
+    }
   });
+
   commandList.forEach((command) => {
     const namespaceName = extractResponseTypeFromCommand(command[0])
       .split('.')
@@ -258,23 +278,34 @@ const generateTestFile = (
 
   codeToReturn += `describe('Testing ${_.capitalize(className)} class', () => {
         `;
+
   commandList.forEach((command) => {
-    const commandMethod: string = command[0]
+    let commandMethod: string = command[0]
       .split('.')
       [command[0].split('.').length - 1].split('(')[0];
-    const commandMethodArguments: Array<string> = command[0]
+    let commandMethodArguments: Array<string> = command[0]
       .split('.')
       [command[0].split('.').length - 1].split('(')[1]
       .split(')')[0]
       .split(',');
-    const commandCoordinates: Array<string> = command[0]
+    let commandCoordinates: Array<string> = command[0]
       .split('.')
       .map((x) => x.split('(')[0]);
     commandCoordinates.shift();
 
+    const isPaginationMethod = commandMethod.toLowerCase().endsWith('all');
+    if (isPaginationMethod) {
+      commandMethod = commandMethod.replace('All', '');
+      commandMethodArguments = commandMethodArguments
+        .filter((x) => x != 'page')
+        .filter((x) => x != 'perPage');
+    }
+
     codeToReturn += `   it('Testing endpoint: ${
       command[1]
-    } - ${commandMethod.toUpperCase()} method', async () => {
+    } - ${commandMethod.toUpperCase()}${
+      isPaginationMethod ? 'ALL' : ''
+    } method', async () => {
             
       try {
         `;
@@ -284,7 +315,8 @@ const generateTestFile = (
         className,
       )}Types.${extractResponseTypeFromCommand(
       command[0],
-    )} = fixtures.response.${commandCoordinates.join('.')}
+      isPaginationMethod,
+    )} = JSON.parse(fixtures.response.${commandCoordinates.join('.')})
       
     
     const axiosResponse: AxiosResponse = {
@@ -294,6 +326,37 @@ const generateTestFile = (
       config: {},
       headers: {}
     };
+
+    ${
+      isPaginationMethod
+        ? `const responseArray:${_.capitalize(
+            className,
+          )}Types.${extractResponseTypeFromCommand(
+            command[0],
+            isPaginationMethod,
+          )}[] = [];responseArray.push(response)`
+        : ''
+    }
+
+    nock('https://snyk.io')
+    .persist()
+    .post(/.*/)
+    .reply(200, () => {
+      return response;
+    })
+    .put(/.*/)
+    .reply(200, () => {
+      return response;
+    })
+    .delete(/.*/)
+    .reply(200, () => {
+      return response;
+    })
+    .get(/.*/)
+    .reply(200, () => {
+      return response;
+    });
+
     `;
 
     // if (commandMethod == 'put' || commandMethod == 'post') {
@@ -324,7 +387,21 @@ const generateTestFile = (
       .filter((x) => x == 'body')
       .map((x) => `fixtures.request.${commandCoordinates.join('.')}.` + x);
 
-    codeToReturn += `const promise = new ${command[0]
+    const currentCommand = isPaginationMethod
+      ? command[0]
+          .replace('page', '')
+          .replace('(,)', '()')
+          .replace('(,', '(')
+          .replace(',)', ')')
+          .replace(',,', ',')
+          .replace('perPage', '')
+          .replace('(,)', '()')
+          .replace('(,', '(')
+          .replace(',)', ')')
+          .replace(',,', ',')
+      : command[0];
+    console.log(currentCommand);
+    codeToReturn += `const result = await new ${currentCommand
       .replace(/:([a-zA-Z0-9]+)/g, `:fixtures.$1`)
       .replace(
         `${
@@ -337,29 +414,34 @@ const generateTestFile = (
           .join(','),
       )}
 
-      `;
-    codeToReturn += `
-      mockAxios.mockResponseFor({url: \`${url}\`},axiosResponse);
-
-      expect(mockAxios.${commandMethod}).toHaveBeenCalledWith(\`${url}\`${
-      body.join() == ''
-        ? `${
-            commandMethod == 'post' || commandMethod == 'put'
-              ? ',JSON.stringify({})'
-              : ''
-          }`
-        : ', JSON.stringify(' + body.join() + ')'
-    })
-
-    
-      const result:${_.capitalize(
-        className,
-      )}Types.${extractResponseTypeFromCommand(command[0])} = await promise
-      
       expect(result).toEqual(
-        response,
-      );
+             ${isPaginationMethod ? 'responseArray' : 'response'},
+         );
       `;
+    // codeToReturn += `
+    //   mockAxios.mockResponseFor({url: \`${url}\`},axiosResponse);
+
+    //   expect(mockAxios.${commandMethod}).toHaveBeenCalledWith(\`${url}\`${
+    //   body.join() == ''
+    //     ? `${
+    //         commandMethod == 'post' || commandMethod == 'put'
+    //           ? ',JSON.stringify({})'
+    //           : ''
+    //       }`
+    //     : ', JSON.stringify(' + body.join() + ')'
+    // })
+
+    //   const result:${_.capitalize(
+    //     className,
+    //   )}Types.${extractResponseTypeFromCommand(
+    //   command[0],
+    //   isPaginationMethod,
+    // )}${isPaginationMethod ? '[]' : ''} = await promise
+
+    //   expect(result).toEqual(
+    //     response,
+    //   );
+    //   `;
     //                     ${
     //                       commandMethod.toUpperCase() == 'GET' ||
     //                       commandMethod.toUpperCase() == 'DELETE'

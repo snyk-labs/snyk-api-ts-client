@@ -28,4 +28,11 @@ describe('Testing utils', () => {
 
     expect(result).toEqual('ab9e037f-9020-4f77-9c48-b1cb0295a4b6');
   });
+
+  it('Testing getTotalPaginationCount', async () => {
+    const headerLinkLine =
+      'link: <https://snyk.io/api/v1/reporting/issues/latest?page=4125>; rel=last, <https://snyk.io/api/v1/reporting/issues/latest?page=2>; rel=next';
+    const lastPageCount = utils.getTotalPaginationCount(headerLinkLine);
+    expect(lastPageCount).toEqual(4125);
+  });
 });
