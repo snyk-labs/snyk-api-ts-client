@@ -3,7 +3,7 @@ import { createFromJSON, DepGraph, DepGraphData } from '@snyk/dep-graph';
 
 interface IssuesWithVulnsPaths {
   issues: {
-    pkgVersions: { [key: string]: Array<Array<string>> };
+    pkgVersionsWithPaths: { [key: string]: Array<Array<string>> }[];
   }[];
 }
 
@@ -31,28 +31,26 @@ export const getAggregatedIssuesWithVulnPaths = async (
     issues: [],
   };
 
-  // @ts-ignore
-  projectAggregatedIssues.issues.map((issue) => {
-    // @ts-ignore
-    const versionsWithVulnPaths = issue.pkgVersions.map((version) => {
+  projectAggregatedIssues?.issues?.map((issue) => {
+    const returnVulnPathsData = issue.pkgVersions.map((version) => {
       const pkg = {
         name: issue.pkgName,
         version: version as string,
       };
-      const returnData = {
+      return {
         [`${pkg.version}`]: getVulnPathsForPkgVersionFromGraph(
           pkg.name,
           pkg.version,
           depGraph,
         ),
       };
-      return returnData;
     });
 
-    const newIssue = {
+    let newIssue = {
+      pkgVersionsWithPaths: returnVulnPathsData,
       ...issue,
     };
-    newIssue.pkgVersions = versionsWithVulnPaths;
+
     returnData.issues.push(newIssue);
   });
 

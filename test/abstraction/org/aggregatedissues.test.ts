@@ -38,6 +38,8 @@ describe('Testing org abstraction ', () => {
     const result = await new Org({ orgId: '123' })
       .project({ projectId: '123' })
       .aggregatedissues.getAggregatedIssuesWithVulnPaths(body);
+
+    console.log(result);
     expect(
       _.isEqual(
         result,

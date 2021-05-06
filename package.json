@@ -46,7 +46,6 @@
   ],
   "homepage": "https://github.com/snyk-tech-services/snyk-api-ts-client#readme",
   "dependencies": {
-    "@manifoldco/swagger-to-ts": "^2.0.0",
     "@snyk/configstore": "^3.2.0-rc1",
     "@snyk/dep-graph": "^1.23.0",
     "@types/lodash": "^4.14.155",
@@ -64,6 +63,7 @@
     "utility-types": "^3.10.0"
   },
   "devDependencies": {
+    "@manifoldco/swagger-to-ts": "^2.0.0",
     "@types/jest": "^25.1.1",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.26",
@@ -80,6 +80,7 @@
     "ts-jest": "^25.1.0",
     "ts-node": "8.6.2",
     "tsc-watch": "^4.1.0",
+    "typedoc": "^0.20.29",
     "typescript": "^3.7.5"
   },
   "pkg": {

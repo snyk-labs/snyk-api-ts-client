@@ -4,7 +4,8 @@
         "id": "SNYK-JS-EXPRESSFILEUPLOAD-473997",
         "issueType": "vuln",
         "pkgName": "express-fileupload",
-        "pkgVersions": [{ "0.0.5": [["express-fileupload@0.0.5"]] }],
+        "pkgVersions": ["0.0.5"],
+        "pkgVersionsWithPaths": [{ "0.0.5": [["express-fileupload@0.0.5"]] }],
         "priorityScore": 704,
         "priority": {
           "score": 704,
@@ -49,7 +50,8 @@
         "id": "SNYK-JS-EXPRESSFILEUPLOAD-595969",
         "issueType": "vuln",
         "pkgName": "express-fileupload",
-        "pkgVersions": [{ "0.0.5": [["express-fileupload@0.0.5"]] }],
+        "pkgVersions": ["0.0.5"],
+        "pkgVersionsWithPaths": [{ "0.0.5": [["express-fileupload@0.0.5"]] }],
         "priorityScore": 696,
         "priority": {
           "score": 696,
@@ -97,7 +99,8 @@
         "id": "SNYK-JS-TREEKILL-536781",
         "issueType": "vuln",
         "pkgName": "tree-kill",
-        "pkgVersions": [
+        "pkgVersions": ["1.2.1"],
+        "pkgVersionsWithPaths": [
           {
             "1.2.1": [
               ["snyk@1.228.3", "snyk-sbt-plugin@2.8.0", "tree-kill@1.2.1"]
@@ -161,7 +164,8 @@
         "id": "SNYK-JS-LODASH-567746",
         "issueType": "vuln",
         "pkgName": "lodash",
-        "pkgVersions": [
+        "pkgVersions": ["4.17.15"],
+        "pkgVersionsWithPaths": [
           {
             "4.17.15": [
               ["snyk@1.228.3", "lodash@4.17.15"],
@@ -266,7 +270,8 @@
         "id": "SNYK-JS-HTTPSPROXYAGENT-469131",
         "issueType": "vuln",
         "pkgName": "https-proxy-agent",
-        "pkgVersions": [
+        "pkgVersions": ["2.2.2"],
+        "pkgVersionsWithPaths": [
           {
             "2.2.2": [
               ["snyk@1.228.3", "proxy-agent@3.1.0", "https-proxy-agent@2.2.2"],
@@ -341,7 +346,8 @@
         "id": "snyk:lic:npm:goof:GPL-2.0",
         "issueType": "license",
         "pkgName": "goof",
-        "pkgVersions": [{ "0.0.3": [[]] }],
+        "pkgVersions": ["0.0.3"],
+        "pkgVersionsWithPaths": [{ "0.0.3": [[]] }],
         "priorityScore": 625,
         "priority": {
           "score": 625,
@@ -376,7 +382,8 @@
         "id": "SNYK-JS-LODASH-590103",
         "issueType": "vuln",
         "pkgName": "lodash",
-        "pkgVersions": [
+        "pkgVersions": ["4.17.15"],
+        "pkgVersionsWithPaths": [
           {
             "4.17.15": [
               ["snyk@1.228.3", "lodash@4.17.15"],
@@ -459,7 +466,8 @@
         "id": "SNYK-JS-Y18N-1021887",
         "issueType": "vuln",
         "pkgName": "y18n",
-        "pkgVersions": [
+        "pkgVersions": ["3.2.1"],
+        "pkgVersionsWithPaths": [
           {
             "3.2.1": [
               [
@@ -516,7 +524,8 @@
         "id": "SNYK-JS-LODASH-608086",
         "issueType": "vuln",
         "pkgName": "lodash",
-        "pkgVersions": [
+        "pkgVersions": ["4.17.15"],
+        "pkgVersionsWithPaths": [
           {
             "4.17.15": [
               ["snyk@1.228.3", "lodash@4.17.15"],
@@ -605,7 +614,8 @@
         "id": "SNYK-JS-INI-1048974",
         "issueType": "vuln",
         "pkgName": "ini",
-        "pkgVersions": [
+        "pkgVersions": ["1.3.5"],
+        "pkgVersionsWithPaths": [
           {
             "1.3.5": [
               ["npmconf@2.1.3", "ini@1.3.5"],
@@ -688,7 +698,8 @@
         "id": "SNYK-JS-DOTPROP-543489",
         "issueType": "vuln",
         "pkgName": "dot-prop",
-        "pkgVersions": [
+        "pkgVersions": ["4.2.0"],
+        "pkgVersionsWithPaths": [
           {
             "4.2.0": [
               ["snyk@1.228.3", "configstore@3.1.2", "dot-prop@4.2.0"],
@@ -743,7 +754,8 @@
         "id": "npm:ejs:20161128",
         "issueType": "vuln",
         "pkgName": "ejs",
-        "pkgVersions": [{ "0.8.8": [["ejs-locals@1.0.2", "ejs@0.8.8"]] }],
+        "pkgVersions": ["0.8.8"],
+        "pkgVersionsWithPaths": [{ "0.8.8": [["ejs-locals@1.0.2", "ejs@0.8.8"]] }],
         "priorityScore": 405,
         "priority": {
           "score": 405,
@@ -794,7 +806,8 @@
         "id": "SNYK-JS-MINIMIST-559764",
         "issueType": "vuln",
         "pkgName": "minimist",
-        "pkgVersions": [
+        "pkgVersions": ["1.2.0", "0.0.8", "0.0.10"],
+        "pkgVersionsWithPaths": [
           {
             "1.2.0": [
               [
@@ -867,7 +880,8 @@
         "id": "SNYK-JS-BL-608877",
         "issueType": "vuln",
         "pkgName": "bl",
-        "pkgVersions": [{ "1.2.2": [["st@1.2.2", "bl@1.2.2"]] }],
+        "pkgVersions": ["1.2.2"],
+        "pkgVersionsWithPaths": [{ "1.2.2": [["st@1.2.2", "bl@1.2.2"]] }],
         "priorityScore": 385,
         "priority": {
           "score": 385,
@@ -916,7 +930,8 @@
         "id": "SNYK-JS-EJS-1049328",
         "issueType": "vuln",
         "pkgName": "ejs",
-        "pkgVersions": [
+        "pkgVersions": ["0.8.8", "2.5.5"],
+        "pkgVersionsWithPaths": [
           { "0.8.8": [["ejs-locals@1.0.2", "ejs@0.8.8"]] },
           { "2.5.5": [["ejs@2.5.5"]] }
         ],
@@ -963,7 +978,8 @@
         "id": "SNYK-JS-ACORN-559469",
         "issueType": "vuln",
         "pkgName": "acorn",
-        "pkgVersions": [
+        "pkgVersions": ["5.7.3"],
+        "pkgVersionsWithPaths": [
           { "5.7.3": [["@snyk/nodejs-runtime-agent@1.14.0", "acorn@5.7.3"]] }
         ],
         "priorityScore": 375,
@@ -1009,7 +1025,8 @@
         "id": "npm:ejs:20161130-1",
         "issueType": "vuln",
         "pkgName": "ejs",
-        "pkgVersions": [{ "0.8.8": [["ejs-locals@1.0.2", "ejs@0.8.8"]] }],
+        "pkgVersions": ["0.8.8"],
+        "pkgVersionsWithPaths": [{ "0.8.8": [["ejs-locals@1.0.2", "ejs@0.8.8"]] }],
         "priorityScore": 295,
         "priority": {
           "score": 295,
@@ -1050,7 +1067,8 @@
         "id": "npm:ejs:20161130",
         "issueType": "vuln",
         "pkgName": "ejs",
-        "pkgVersions": [{ "0.8.8": [["ejs-locals@1.0.2", "ejs@0.8.8"]] }],
+        "pkgVersions": ["0.8.8"],
+        "pkgVersionsWithPaths": [{ "0.8.8": [["ejs-locals@1.0.2", "ejs@0.8.8"]] }],
         "priorityScore": 295,
         "priority": {
           "score": 295,
