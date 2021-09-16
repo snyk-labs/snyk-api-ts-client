@@ -67,6 +67,7 @@ const generateClass = (
   abstractionImportsArray.push(
     generateImportsForAbstractionMethods(classToGenerate),
   );
+  abstractionImportsArray = [...new Set(abstractionImportsArray)];
 
   if (classToGenerate) {
     if (isRootClass) {
@@ -777,7 +778,7 @@ const generatePaginationMethods = (
         method.argsList = method.argsList
           .filter((x) => !x.startsWith('perPage'))
           .filter((x) => !x.startsWith('page'));
-        method.argsList.unshift('noLimitMode: boolean = false');
+        method.argsList.push('noLimitMode: boolean = false');
 
         let qsIfStatements = '';
         qsParametersNamesList.forEach((qsParameterName) => {
@@ -1004,6 +1005,6 @@ parsedJSON.forEach((classItem) => {
   const classCode = generateClass(classItem);
   fs.writeFileSync(
     path.join('./src/lib/client/generated/' + classItem.name + '.ts'),
-    initLines + abstractionImportsArray.join(`\n`) + classCode,
+    initLines + abstractionImportsArray.join(`\n`) + '\n' + classCode,
   );
 });
