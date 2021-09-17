@@ -330,7 +330,10 @@ const main = (jsonPath: string) => {
   paths = consolidateReferences(paths);
   Object.keys(paths).forEach((path) => {
     const verbs = Object.keys(paths[path]);
-    const splitEndpoint = path.split('/').filter((x) => x);
+    const splitEndpoint = path
+      .split('?')[0]
+      .split('/')
+      .filter((x) => x);
     classMap = registerEndpoint(
       classMap,
       extractClassAndParamFromEndpoint(splitEndpoint, verbs, path),
