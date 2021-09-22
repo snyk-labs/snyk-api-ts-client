@@ -4,10 +4,10 @@
 
 [![Known Vulnerabilities](https://snyk.io/test/github/snyk-tech-services/snyk-api-ts-client/badge.svg)](https://snyk.io/test/github/snyk-tech-services/snyk-api-ts-client)
 
-# Generated Snyk Api client
-> **Alpha version !!**
+# Documentation based generated Snyk Api Typescript client
 
-Taking as input a swagger definition we convert from the api blueprint, it generates a client for all endpoints.
+Taking as input a swagger definition we convert from the api blueprint, it generates a client for all Snyk API v1 endpoints.  
+APIv3 endpoints are currently not supported.
 
 Generated from [Snyk APIs](https://snyk.docs.apiary.io/)
 
@@ -52,3 +52,7 @@ main()
 Pass a boolean true/false to see the full response or just the data. Default is false, showing you only the response body.
 
 
+### Endpoint Deprecation Notes
+As of 1.7.3, the `/issues` endpoint is decommissioned. The `aggregated-issues` endpoint is the replacement to use.  
+Vulnerable paths can be retrieved using the [paths endpoint](https://snyk.docs.apiary.io/#reference/projects/project-issue-paths/list-all-project-issue-paths) which also contain the `fixVersion` info to know how to fix that particular path.  
+The supporting methods are available in the client generated.
