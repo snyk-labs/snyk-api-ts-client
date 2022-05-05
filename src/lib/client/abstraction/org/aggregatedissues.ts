@@ -66,13 +66,24 @@ const getVulnPathsForPkgVersionFromGraph = (
     name: pkgName,
     version: version,
   };
-  const pkgVulnPaths = depGraph.pkgPathsToRoot(pkg) as Array<
-    Array<{ name: string; version?: string }>
-  >;
-  return pkgVulnPaths.map((vulnPath) =>
-    vulnPath
-      .map((vulnPathPkg) => `${vulnPathPkg.name}@${vulnPathPkg.version}`)
-      .reverse()
-      .slice(1),
-  );
+
+  // Handle binaries vulns that aren't always in the depgraph (like base image stuff). Adding them as top level path.
+  if (
+    !depGraph
+      .getPkgs()
+      .map((depPkgInfo) => `${depPkgInfo.name}@${depPkgInfo.version}`)
+      .includes(`${pkgName}@${version}`)
+  ) {
+    return [[`${pkgName}@${version}`]];
+  } else {
+    const pkgVulnPaths = depGraph.pkgPathsToRoot(pkg) as Array<
+      Array<{ name: string; version?: string }>
+    >;
+    return pkgVulnPaths.map((vulnPath) =>
+      vulnPath
+        .map((vulnPathPkg) => `${vulnPathPkg.name}@${vulnPathPkg.version}`)
+        .reverse()
+        .slice(1),
+    );
+  }
 };
