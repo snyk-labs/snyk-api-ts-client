@@ -14,3 +14,4 @@ snyk-prepared.json
 *.bak
 test/fixtures/*.json
 test/lib/*.test.ts
+.dccache
