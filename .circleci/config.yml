@@ -7,7 +7,6 @@ jobs:
             - image: circleci/node:latest
         steps:
             - checkout
-            #- run: npm install semantic-release @semantic-release/exec pkg --save-dev
             - run: npm install
             - run: curl https://snyk.docs.apiary.io/api-description-document -o snyk.apib
             - run: ./prepare-apib.sh snyk.apib
@@ -23,10 +22,6 @@ jobs:
             - run: npm run generate-test-fixtures
             - run: npm run format
             - run: npm test
-            - snyk/scan:
-                fail-on-issues: true
-                monitor-on-build: true
-                token-variable: SNYK_TOKEN
             - run: npm run clean-generated-classes
             - run: npm run generate-classes
             - run: npm run clean-for-release
@@ -51,10 +46,6 @@ jobs:
             - run: npm run generate-test-fixtures
             - run: npm run format
             - run: npm test
-            - snyk/scan:
-                fail-on-issues: true
-                monitor-on-build: false
-                token-variable: SNYK_TOKEN
     build-test-from-fork:
         docker:
             - image: circleci/node:latest
