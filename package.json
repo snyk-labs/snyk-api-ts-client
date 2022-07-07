@@ -56,7 +56,7 @@
     "lodash": "^4.17.21",
     "snyk": "^1.360.0",
     "snyk-config": "^5.0.0",
-    "snyk-request-manager": "^1.4.1",
+    "snyk-request-manager": "1.7.1",
     "source-map-support": "^0.5.16",
     "tslib": "^1.10.0",
     "typescript": "^3.9.5",
