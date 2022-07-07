@@ -7,7 +7,7 @@
     "format": "prettier --write '{''{src,test}/!(fixtures)/**/*,*}.{js,ts,json,yml}'",
     "lint": "npm run format:check && npm run lint:eslint",
     "lint:eslint": "eslint --cache '{lib,test}/**/*.ts'",
-    "test": "snyk test && npm run lint && npm run test:unit",
+    "test": "npm run lint && npm run test:unit",
     "test:unit": "jest ./test/*",
     "test:coverage": "npm run test:unit -- --coverage",
     "test:watch": "tsc-watch --onSuccess 'npm run test:unit'",
@@ -18,7 +18,6 @@
     "build-and-generate-for-test-and-format": "npm run build-generators-only && npm run generate-classes test && npm run build-generators-and-abstraction && npm run generate-classes test && npm run generate-test-cases && npm run generate-test-fixtures && npm run format",
     "build-watch": "tsc -w",
     "prepare": "npm run snyk-protect",
-    "snyk-test": "snyk test",
     "convert-to-swagger": "npx apib2swagger -i ./snyk.apib -o ./snyk.json",
     "prepare-swagger": "node dist/preprocessors/prepare.js > snyk-prepared.json",
     "clean-generated-classes": "rm src/lib/client/generated/*.ts",
@@ -28,7 +27,7 @@
     "generate-test-cases": "node dist/generators/generateTestCases.js",
     "generate-test-fixtures": "node dist/generators/generateTestFixtures.js",
     "pkg-binaries": "npx pkg . -t node12-linux-x64,node12-macos-x64,node12-win-x64 --out-path ./dist/binaries",
-    "snyk-protect": "snyk protect"
+    "snyk-protect": "npx @snyk/protect"
   },
   "types": "./dist/index.d.ts",
   "repository": {
@@ -50,11 +49,10 @@
     "@snyk/dep-graph": "^1.23.0",
     "@types/lodash": "^4.14.155",
     "@types/node": "^14.0.12",
-    "axios": "0.26.1",
+    "axios": "0.27.2",
     "debug": "^4.1.1",
     "jsonq": "^1.2.0",
     "lodash": "^4.17.21",
-    "snyk": "^1.360.0",
     "snyk-config": "^5.0.0",
     "snyk-request-manager": "^1.4.1",
     "source-map-support": "^0.5.16",
