@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import * as _ from 'lodash';
-import { type } from 'os';
 import { ConsolidatedClass } from './generate';
 
 export const generateTestCases = async (preparedJsonPath: string) => {
@@ -306,7 +305,7 @@ const generateTestFile = (
     } - ${commandMethod.toUpperCase()}${
       isPaginationMethod ? 'ALL' : ''
     } method', async () => {
-            
+
       try {
         `;
 
@@ -317,8 +316,8 @@ const generateTestFile = (
       command[0],
       isPaginationMethod,
     )} = JSON.parse(fixtures.response.${commandCoordinates.join('.')})
-      
-    
+
+
     const axiosResponse: AxiosResponse = {
       data: response,
       status: 200,
