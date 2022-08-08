@@ -818,11 +818,11 @@ const generatePaginationMethods = (
                     url += \`?\${urlQueryParams.join("&")}\`
                 }
 
-                
+
 
                 const fullResponseUserSetting = Object(this.currentContext)['fullResponse']
                 Object(this.currentContext)['fullResponse'] = true
-                
+
                 try {
                     const firstPageResult = await requestManager.request({verb: '${
                       method.name
@@ -857,10 +857,10 @@ const generatePaginationMethods = (
                     if(bulkRequestArray.length>0){
                       bulkResultsSet = await requestManager.requestBulk(bulkRequestArray)
                     }
-              
+
                     const resultsSet = [firstPageResult.data, ...bulkResultsSet.map(x=> Object(x)['data'])]
-                    
-              
+
+
                     return resultsSet
 
                 } catch (err) {
