@@ -43,6 +43,8 @@ export type OpenAPI3Reference =
 const convert = (node: OpenAPI3SchemaObject, interfaceName: string) => {
   function transform(node: OpenAPI3SchemaObject): string {
     switch (nodeType(node)) {
+      case 'null':
+        return 'any';
       case 'string':
       case 'number':
       case 'boolean': {

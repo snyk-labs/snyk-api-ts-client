@@ -309,13 +309,38 @@ const generateTestFile = (
       try {
         `;
 
-    codeToReturn += `
+    const classFile = fs
+      .readFileSync(`src/lib/client/generated/${className}.ts`)
+      .toString();
+
+    if (
+      !classFile.includes(
+        `${extractResponseTypeFromCommand(command[0], isPaginationMethod)
+          .split('.')
+          .slice(-1)}`,
+      )
+    ) {
+      console.log(
+        `Skipping ${extractResponseTypeFromCommand(
+          command[0],
+          isPaginationMethod,
+        )}`,
+      );
+      codeToReturn += `
+      const response: any = JSON.parse(fixtures.response.${commandCoordinates.join(
+        '.',
+      )})`;
+    } else {
+      codeToReturn += `
       const response: ${_.capitalize(
         className,
       )}Types.${extractResponseTypeFromCommand(
-      command[0],
-      isPaginationMethod,
-    )} = JSON.parse(fixtures.response.${commandCoordinates.join('.')})
+        command[0],
+        isPaginationMethod,
+      )} = JSON.parse(fixtures.response.${commandCoordinates.join('.')})`;
+    }
+
+    codeToReturn += `
 
 
     const axiosResponse: AxiosResponse = {
@@ -399,7 +424,7 @@ const generateTestFile = (
           .replace(',)', ')')
           .replace(',,', ',')
       : command[0];
-    console.log(currentCommand);
+    // console.log(currentCommand);
     codeToReturn += `const result = await new ${currentCommand
       .replace(/:([a-zA-Z0-9]+)/g, `:fixtures.$1`)
       .replace(

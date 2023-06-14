@@ -20,10 +20,15 @@ type SchemaObjectType =
   | 'object'
   | 'oneOf'
   | 'ref'
-  | 'string';
+  | 'string'
+  | 'null';
 export function nodeType(obj: any): SchemaObjectType | undefined {
   if (!obj || typeof obj !== 'object') {
     return undefined;
+  }
+
+  if (obj.type == 'null') {
+    return 'null';
   }
 
   if (obj['$ref']) {
@@ -97,4 +102,8 @@ export function tsPartial(type: string): string {
 /** Convert [X, Y, Z] into X | Y | Z */
 export function tsUnionOf(types: string[]): string {
   return `${types.join(' | ')}`;
+}
+
+export function getObjectKey<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key];
 }

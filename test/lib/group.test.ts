@@ -1,4 +1,5 @@
 import { Group, GroupTypes } from '../../src/lib/index';
+import { AxiosResponse } from 'axios';
 import nock from 'nock';
 jest.unmock('axios');
 const fixtures = require('../fixtures/group.json').fixtures;
@@ -9,6 +10,14 @@ describe('Testing Group class', () => {
       const response: GroupTypes.SettingsGetResponseType = JSON.parse(
         fixtures.response.settings.get,
       );
+
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
 
       nock('https://snyk.io')
         .persist()
@@ -44,6 +53,14 @@ describe('Testing Group class', () => {
         fixtures.response.settings.put,
       );
 
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
+
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -77,6 +94,14 @@ describe('Testing Group class', () => {
       const response: GroupTypes.MembersGetResponseType = JSON.parse(
         fixtures.response.members.get,
       );
+
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
 
       nock('https://snyk.io')
         .persist()
@@ -112,6 +137,14 @@ describe('Testing Group class', () => {
         fixtures.response.org.members.post,
       );
 
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
+
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -145,6 +178,14 @@ describe('Testing Group class', () => {
       const response: GroupTypes.TagsGetResponseType = JSON.parse(
         fixtures.response.tags.get,
       );
+
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
 
       nock('https://snyk.io')
         .persist()
@@ -181,6 +222,14 @@ describe('Testing Group class', () => {
         fixtures.response.tags.delete.post,
       );
 
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
+
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -214,6 +263,14 @@ describe('Testing Group class', () => {
       const response: GroupTypes.OrgsGetResponseType = JSON.parse(
         fixtures.response.orgs.get,
       );
+
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
 
       nock('https://snyk.io')
         .persist()
@@ -251,6 +308,14 @@ describe('Testing Group class', () => {
         fixtures.response.roles.get,
       );
 
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
+
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -282,6 +347,14 @@ describe('Testing Group class', () => {
       const response: GroupTypes.AuditPostResponseType = JSON.parse(
         fixtures.response.audit.post,
       );
+
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
 
       nock('https://snyk.io')
         .persist()
@@ -321,6 +394,14 @@ describe('Testing Group class', () => {
         fixtures.response.tags.getAll,
       );
 
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
+
       const responseArray: GroupTypes.TagsGetResponseType[] = [];
       responseArray.push(response);
 
@@ -358,6 +439,14 @@ describe('Testing Group class', () => {
         fixtures.response.orgs.getAll,
       );
 
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
+
       const responseArray: GroupTypes.OrgsGetResponseType[] = [];
       responseArray.push(response);
 
@@ -394,6 +483,14 @@ describe('Testing Group class', () => {
       const response: GroupTypes.AuditPostResponseType = JSON.parse(
         fixtures.response.audit.postAll,
       );
+
+      const axiosResponse: AxiosResponse = {
+        data: response,
+        status: 200,
+        statusText: 'OK',
+        config: {},
+        headers: {},
+      };
 
       const responseArray: GroupTypes.AuditPostResponseType[] = [];
       responseArray.push(response);
