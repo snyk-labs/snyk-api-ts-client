@@ -320,12 +320,12 @@ const generateTestFile = (
           .slice(-1)}`,
       )
     ) {
-      console.log(
-        `Skipping ${extractResponseTypeFromCommand(
-          command[0],
-          isPaginationMethod,
-        )}`,
-      );
+      // console.log(
+      //   `Skipping ${extractResponseTypeFromCommand(
+      //     command[0],
+      //     isPaginationMethod,
+      //   )}`,
+      // );
       codeToReturn += `
       const response: any = JSON.parse(fixtures.response.${commandCoordinates.join(
         '.',

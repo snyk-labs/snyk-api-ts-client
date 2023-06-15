@@ -1,0 +1,302 @@
+{
+  "projects": [
+    {
+      "id": "7c62c3bd-539a-4ee6-b1a0-1f3b5196849b",
+      "name": "snyk-tech-services/snyk-delta:package.json",
+      "type": "project",
+      "origin": "github",
+      "created": "2023-01-10T16:37:37.804Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "develop",
+      "isMonitored": true
+    },
+    {
+      "id": "db066cb9-b373-46da-b918-b49b541e0d63",
+      "name": "antoine-snyk-demo/TestRepoAntoine",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T14:10:03.186Z",
+      "testFrequency": "weekly",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "0cc9d21b-4ac7-4f27-8c6a-b32b4cdf5c68",
+      "name": "Snyk Demo/java-goof",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T13:49:49.395Z",
+      "testFrequency": "weekly",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "38e02916-0cf7-4927-ba98-06afae9fef36",
+      "name": "Snyk Demo/java-goof:todolist-web-struts/pom.xml",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T13:49:42.637Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "019e3f03-5230-4d4f-9326-2fdc7161016f",
+      "name": "Snyk Demo/java-goof:todolist-core/pom.xml",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T13:49:42.616Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "4737fc9c-3894-40ba-9dc5-aa8ae658c9f6",
+      "name": "Snyk Demo/java-goof:todolist-web-common/pom.xml",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T13:49:42.572Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "7ae91d60-d686-4035-b94e-32159359b253",
+      "name": "jeff-snyk-demo/java-goof",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T13:43:11.924Z",
+      "testFrequency": "weekly",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "f3b2e1cf-69e2-4fab-89a0-b17e0979abc6",
+      "name": "jeff-snyk-demo/java-goof:todolist-web-struts/pom.xml",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T13:42:20.990Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "b9046a1a-3e69-4d21-a6d2-c71f649cb7b5",
+      "name": "jeff-snyk-demo/java-goof:todolist-web-common/pom.xml",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T13:42:20.894Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "b4d24542-e0ee-4166-80bc-cd474c2bc968",
+      "name": "jeff-snyk-demo/java-goof:todolist-core/pom.xml",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T13:42:20.782Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "377585da-e344-4938-a0af-126d27eb16ec",
+      "name": "antoine-snyk-demo/testOrgana",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T13:25:59.163Z",
+      "testFrequency": "weekly",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "0f6028ea-8abd-4c31-8dcc-3973dc3c8c47",
+      "name": "antoine-snyk-demo/TestRepoAntoine:GoofieSubFolder/package.json",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T12:43:26.082Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "ac7c3f02-5ef4-4123-9d13-88a8f89dd821",
+      "name": "antoine-snyk-demo/TestRepoAntoine:goof/package.json",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T12:43:25.935Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "9f803629-6836-4f1f-82d7-93765df5c794",
+      "name": "antoine-snyk-demo/testOrgana:pom.xml",
+      "type": "project",
+      "origin": "bitbucket-server",
+      "created": "2023-01-10T12:43:21.306Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "5634c570-cfd4-4964-b96f-42cc54c39e61",
+      "name": "aarlaud-playground/python-flask-sample-app",
+      "type": "project",
+      "origin": "github",
+      "created": "2023-01-05T23:39:41.297Z",
+      "testFrequency": "weekly",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "70c8adbd-18cb-4b4f-8200-16e8c458839e",
+      "name": "aarlaud-playground/python-flask-sample-app:Dockerfile",
+      "type": "project",
+      "origin": "github",
+      "created": "2023-01-05T23:36:30.682Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "822a3565-9b97-4960-ac2b-7313da2202ed" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "048e7057-bd8d-4868-a2db-8db7b0918581",
+      "name": "github-stats",
+      "type": "project",
+      "origin": "cli",
+      "created": "2021-10-21T11:43:42.450Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "4eee4035-64c1-4d66-a2b2-5bfdcee0c448" },
+      "targetReference": "",
+      "isMonitored": true
+    },
+    {
+      "id": "175d3317-e43e-4046-b23b-422e2a2da6db",
+      "name": "github-stats",
+      "type": "project",
+      "origin": "cli",
+      "created": "2019-10-28T14:27:09.573Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "4eee4035-64c1-4d66-a2b2-5bfdcee0c448" },
+      "targetReference": "",
+      "isMonitored": true
+    },
+    {
+      "id": "3b96638d-0611-4184-9746-0431cee363c4",
+      "name": "snyk-filter",
+      "type": "project",
+      "origin": "cli",
+      "created": "2019-10-10T19:37:21.928Z",
+      "testFrequency": "daily",
+      "importingUser": {},
+      "targetReference": "",
+      "isMonitored": true
+    },
+    {
+      "id": "c19ad262-4100-4918-b9be-ad361904e9b8",
+      "name": "/Users/antoine/Documents/dev/Snyk/licenseTextAndCopyrightBOM:go.mod",
+      "type": "project",
+      "origin": "cli",
+      "created": "2019-08-14T01:36:44.431Z",
+      "testFrequency": "daily",
+      "importingUser": {},
+      "targetReference": "",
+      "isMonitored": true
+    },
+    {
+      "id": "6200ee2a-7a57-49ea-9694-6f694e09564a",
+      "name": "aarlaud-snyk/snyk-jar-scan:package.json",
+      "type": "project",
+      "origin": "github",
+      "created": "2018-10-21T03:17:46.799Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "4eee4035-64c1-4d66-a2b2-5bfdcee0c448" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "7439e322-f9c1-4c42-8367-002b33b9d946",
+      "name": "aarlaud-snyk/gitlab-stats:package.json",
+      "type": "project",
+      "origin": "github",
+      "created": "2018-06-22T17:41:23.633Z",
+      "testFrequency": "daily",
+      "importingUser": {},
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "994beb01-b69e-449b-afa9-17764b7d9c09",
+      "name": "aarlaud-snyk/angularSnykScanner:package.json",
+      "type": "project",
+      "origin": "github",
+      "created": "2018-05-03T21:31:06.135Z",
+      "testFrequency": "daily",
+      "importingUser": {},
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "14e85ea8-e34c-4aff-865c-ae95ad4ed351",
+      "name": "aarlaud-snyk/angularSnykScanner:templates/package.json",
+      "type": "project",
+      "origin": "github",
+      "created": "2018-05-03T21:31:06.115Z",
+      "testFrequency": "daily",
+      "importingUser": {},
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "0f376a8b-8590-40de-8388-24fa99b406a5",
+      "name": "aarlaud-snyk/angularSnykScanner:tmp/package.json",
+      "type": "project",
+      "origin": "github",
+      "created": "2018-05-03T21:31:06.104Z",
+      "testFrequency": "daily",
+      "importingUser": {},
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "26e10cce-7279-4583-8be7-2d4f4c82a0ca",
+      "name": "aarlaud-snyk/snyk-filter:package.json",
+      "type": "project",
+      "origin": "github",
+      "created": "2018-03-22T00:43:40.538Z",
+      "testFrequency": "daily",
+      "importingUser": { "id": "4eee4035-64c1-4d66-a2b2-5bfdcee0c448" },
+      "targetReference": "master",
+      "isMonitored": true
+    },
+    {
+      "id": "afd64e9a-e96a-4049-83ce-ceed670dde4f",
+      "name": "aarlaud-snyk/github-stats:package.json",
+      "type": "project",
+      "origin": "github",
+      "created": "2018-02-03T23:02:21.713Z",
+      "testFrequency": "daily",
+      "importingUser": {},
+      "targetReference": "master",
+      "isMonitored": true
+    }
+  ],
+  "org": { "id": "361fd3c0-41d4-4ea4-ba77-09bb17890967" }
+}
