@@ -10,18 +10,11 @@ const fixtures = fs.readFileSync('test/fixtures/utils/allProjects.json');
 
 describe('Testing utils', () => {
   it('Testing getProjectUUID', async () => {
-    const axiosResponse: AxiosResponse = {
-      data: JSON.parse(fixtures.toString()),
-      status: 200,
-      statusText: 'OK',
-      config: {},
-      headers: {},
-    };
     const promise = utils.getProjectUUID('Playground', 'goof');
 
     mockAxios.mockResponseFor(
       { url: `/org/Playground/projects` },
-      axiosResponse,
+      { data: JSON.parse(fixtures.toString()), status: 200 },
     );
 
     const result: string = await promise;

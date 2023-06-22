@@ -11,14 +11,6 @@ describe('Testing Org class', () => {
         fixtures.response.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -51,14 +43,6 @@ describe('Testing Org class', () => {
         fixtures.response.delete,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -90,14 +74,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.NotificationsettingsGetResponseType = JSON.parse(
         fixtures.response.notificationsettings.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -132,14 +108,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.NotificationsettingsPutResponseType = JSON.parse(
         fixtures.response.notificationsettings.put,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -177,14 +145,6 @@ describe('Testing Org class', () => {
         fixtures.response.invite.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -218,14 +178,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.MembersGetResponseType = JSON.parse(
         fixtures.response.members.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -261,14 +213,6 @@ describe('Testing Org class', () => {
         fixtures.response.members.put,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -303,14 +247,6 @@ describe('Testing Org class', () => {
         fixtures.response.members.delete,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -344,14 +280,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Members.UpdatePutResponseType = JSON.parse(
         fixtures.response.members.update.put,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -388,14 +316,6 @@ describe('Testing Org class', () => {
         fixtures.response.settings.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -427,14 +347,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.SettingsPutResponseType = JSON.parse(
         fixtures.response.settings.put,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -470,14 +382,6 @@ describe('Testing Org class', () => {
         fixtures.response.provision.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -512,14 +416,6 @@ describe('Testing Org class', () => {
         fixtures.response.provision.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -551,14 +447,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.ProvisionDeleteResponseType = JSON.parse(
         fixtures.response.provision.delete,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -594,14 +482,6 @@ describe('Testing Org class', () => {
         fixtures.response.integrations.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -635,14 +515,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.IntegrationsPostResponseType = JSON.parse(
         fixtures.response.integrations.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -678,14 +550,6 @@ describe('Testing Org class', () => {
         fixtures.response.integrations.put,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -719,14 +583,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.IntegrationsGetResponseType = JSON.parse(
         fixtures.response.integrations.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -762,14 +618,6 @@ describe('Testing Org class', () => {
         fixtures.response.integrations.authentication.delete,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -803,14 +651,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Integrations.Authentication.ProvisiontokenPostResponseType = JSON.parse(
         fixtures.response.integrations.authentication.provisiontoken.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -846,14 +686,6 @@ describe('Testing Org class', () => {
         fixtures.response.integrations.authentication.switchtoken.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -887,14 +719,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Integrations.ClonePostResponseType = JSON.parse(
         fixtures.response.integrations.clone.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -930,14 +754,6 @@ describe('Testing Org class', () => {
         fixtures.response.integrations.settings.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -972,14 +788,6 @@ describe('Testing Org class', () => {
         fixtures.response.integrations.settings.put,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1013,14 +821,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Integrations.ImportPostResponseType = JSON.parse(
         fixtures.response.integrations.import.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1057,14 +857,6 @@ describe('Testing Org class', () => {
         fixtures.response.integrations.import.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1100,14 +892,6 @@ describe('Testing Org class', () => {
         fixtures.response.projects.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1141,14 +925,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.ProjectGetResponseType = JSON.parse(
         fixtures.response.project.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1184,14 +960,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.put,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1225,14 +993,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.ProjectDeleteResponseType = JSON.parse(
         fixtures.response.project.delete,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1268,14 +1028,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.deactivate.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1310,14 +1062,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.activate.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1351,14 +1095,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.AggregatedissuesPostResponseType = JSON.parse(
         fixtures.response.project.aggregatedissues.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1395,14 +1131,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.Issue.PathsGetResponseType = JSON.parse(
         fixtures.response.project.issue.paths.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1443,14 +1171,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.issue.jiraissue.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1485,14 +1205,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.HistoryPostResponseType = JSON.parse(
         fixtures.response.project.history.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1533,14 +1245,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.history.aggregatedissues.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1577,14 +1281,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.History.Issue.PathsGetResponseType = JSON.parse(
         fixtures.response.project.history.issue.paths.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1625,14 +1321,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.depgraph.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1667,14 +1355,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.ignores.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1708,14 +1388,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.IgnoreGetResponseType = JSON.parse(
         fixtures.response.project.ignore.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1752,14 +1424,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.ignore.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1794,14 +1458,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.IgnorePutResponseType = JSON.parse(
         fixtures.response.project.ignore.put,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1838,14 +1494,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.ignore.delete,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1881,14 +1529,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.jiraissues.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -1922,14 +1562,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.SettingsGetResponseType = JSON.parse(
         fixtures.response.project.settings.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -1965,14 +1597,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.settings.put,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2006,14 +1630,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.SettingsDeleteResponseType = JSON.parse(
         fixtures.response.project.settings.delete,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -2049,14 +1665,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.move.put,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2090,14 +1698,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.TagsPostResponseType = JSON.parse(
         fixtures.response.project.tags.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -2133,14 +1733,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.tags.remove.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2175,14 +1767,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.attributes.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2216,14 +1800,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.DependenciesPostResponseType = JSON.parse(
         fixtures.response.dependencies.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -2263,14 +1839,6 @@ describe('Testing Org class', () => {
         fixtures.response.licenses.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2307,14 +1875,6 @@ describe('Testing Org class', () => {
         fixtures.response.entitlements.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2346,14 +1906,6 @@ describe('Testing Org class', () => {
   it('Testing endpoint: /org/{orgId}/entitlement/{entitlementKey} - GET method', async () => {
     try {
       const response: any = JSON.parse(fixtures.response.entitlement.get);
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -2388,14 +1940,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.AuditPostResponseType = JSON.parse(
         fixtures.response.audit.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -2435,14 +1979,6 @@ describe('Testing Org class', () => {
         fixtures.response.webhooks.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2477,14 +2013,6 @@ describe('Testing Org class', () => {
         fixtures.response.webhooks.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2516,14 +2044,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.WebhooksGetResponseType = JSON.parse(
         fixtures.response.webhooks.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -2559,14 +2079,6 @@ describe('Testing Org class', () => {
         fixtures.response.webhooks.delete,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2601,14 +2113,6 @@ describe('Testing Org class', () => {
         fixtures.response.webhooks.ping.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -2642,14 +2146,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.Issue.PathsGetResponseType = JSON.parse(
         fixtures.response.project.issue.paths.getAll,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       const responseArray: OrgTypes.Project.Issue.PathsGetResponseType[] = [];
       responseArray.push(response);
@@ -2689,14 +2185,6 @@ describe('Testing Org class', () => {
         fixtures.response.project.history.postAll,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       const responseArray: OrgTypes.Project.HistoryPostResponseType[] = [];
       responseArray.push(response);
 
@@ -2734,14 +2222,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.Project.History.Issue.PathsGetResponseType = JSON.parse(
         fixtures.response.project.history.issue.paths.getAll,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       const responseArray: OrgTypes.Project.History.Issue.PathsGetResponseType[] = [];
       responseArray.push(response);
@@ -2781,14 +2261,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.DependenciesPostResponseType = JSON.parse(
         fixtures.response.dependencies.postAll,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       const responseArray: OrgTypes.DependenciesPostResponseType[] = [];
       responseArray.push(response);
@@ -2830,14 +2302,6 @@ describe('Testing Org class', () => {
       const response: OrgTypes.AuditPostResponseType = JSON.parse(
         fixtures.response.audit.postAll,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       const responseArray: OrgTypes.AuditPostResponseType[] = [];
       responseArray.push(response);

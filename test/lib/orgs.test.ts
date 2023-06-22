@@ -11,14 +11,6 @@ describe('Testing Orgs class', () => {
         fixtures.response.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)

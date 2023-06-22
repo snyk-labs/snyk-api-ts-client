@@ -343,13 +343,6 @@ const generateTestFile = (
     codeToReturn += `
 
 
-    const axiosResponse: AxiosResponse = {
-      data: response,
-      status: 200,
-      statusText: "OK",
-      config: {},
-      headers: {}
-    };
 
     ${
       isPaginationMethod

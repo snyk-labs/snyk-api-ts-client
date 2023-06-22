@@ -11,14 +11,6 @@ describe('Testing Test class', () => {
         fixtures.response.maven.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -60,14 +52,6 @@ describe('Testing Test class', () => {
         fixtures.response.maven.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -106,14 +90,6 @@ describe('Testing Test class', () => {
         fixtures.response.npm.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -148,14 +124,6 @@ describe('Testing Test class', () => {
         fixtures.response.npm.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -189,14 +157,6 @@ describe('Testing Test class', () => {
       const response: TestTypes.GolangdepPostResponseType = JSON.parse(
         fixtures.response.golangdep.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -233,14 +193,6 @@ describe('Testing Test class', () => {
         fixtures.response.govendor.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -274,14 +226,6 @@ describe('Testing Test class', () => {
       const response: TestTypes.YarnPostResponseType = JSON.parse(
         fixtures.response.yarn.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -317,14 +261,6 @@ describe('Testing Test class', () => {
         fixtures.response.rubygems.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -359,14 +295,6 @@ describe('Testing Test class', () => {
         fixtures.response.rubygems.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -400,14 +328,6 @@ describe('Testing Test class', () => {
       const response: TestTypes.GradleGetResponseType = JSON.parse(
         fixtures.response.gradle.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -450,14 +370,6 @@ describe('Testing Test class', () => {
         fixtures.response.gradle.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -491,14 +403,6 @@ describe('Testing Test class', () => {
       const response: TestTypes.SbtGetResponseType = JSON.parse(
         fixtures.response.sbt.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -538,14 +442,6 @@ describe('Testing Test class', () => {
         fixtures.response.sbt.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -579,14 +475,6 @@ describe('Testing Test class', () => {
       const response: TestTypes.PipGetResponseType = JSON.parse(
         fixtures.response.pip.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -622,14 +510,6 @@ describe('Testing Test class', () => {
         fixtures.response.pip.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -664,14 +544,6 @@ describe('Testing Test class', () => {
         fixtures.response.composer.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -705,14 +577,6 @@ describe('Testing Test class', () => {
       const response: TestTypes.DepgraphPostResponseType = JSON.parse(
         fixtures.response.depgraph.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()

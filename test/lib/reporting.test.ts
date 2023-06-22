@@ -11,14 +11,6 @@ describe('Testing Reporting class', () => {
         fixtures.response.issues.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -60,14 +52,6 @@ describe('Testing Reporting class', () => {
         fixtures.response.issues.latest.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -107,14 +91,6 @@ describe('Testing Reporting class', () => {
         fixtures.response.counts.issues.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -152,14 +128,6 @@ describe('Testing Reporting class', () => {
         fixtures.response.counts.issues.latest.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -194,14 +162,6 @@ describe('Testing Reporting class', () => {
       const response: ReportingTypes.Counts.ProjectsPostResponseType = JSON.parse(
         fixtures.response.counts.projects.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -239,14 +199,6 @@ describe('Testing Reporting class', () => {
         fixtures.response.counts.projects.latest.post,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -280,14 +232,6 @@ describe('Testing Reporting class', () => {
       const response: ReportingTypes.Counts.TestsPostResponseType = JSON.parse(
         fixtures.response.counts.tests.post,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -325,14 +269,6 @@ describe('Testing Reporting class', () => {
       const response: ReportingTypes.IssuesPostResponseType = JSON.parse(
         fixtures.response.issues.postAll,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       const responseArray: ReportingTypes.IssuesPostResponseType[] = [];
       responseArray.push(response);
@@ -375,14 +311,6 @@ describe('Testing Reporting class', () => {
       const response: ReportingTypes.Issues.LatestPostResponseType = JSON.parse(
         fixtures.response.issues.latest.postAll,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       const responseArray: ReportingTypes.Issues.LatestPostResponseType[] = [];
       responseArray.push(response);

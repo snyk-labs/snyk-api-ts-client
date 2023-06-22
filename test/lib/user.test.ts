@@ -11,14 +11,6 @@ describe('Testing User class', () => {
         fixtures.response.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -51,14 +43,6 @@ describe('Testing User class', () => {
         fixtures.response.get,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -90,14 +74,6 @@ describe('Testing User class', () => {
       const response: UserTypes.Notificationsettings.OrgGetResponseType = JSON.parse(
         fixtures.response.notificationsettings.org.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -133,14 +109,6 @@ describe('Testing User class', () => {
         fixtures.response.notificationsettings.org.put,
       );
 
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
-
       nock('https://snyk.io')
         .persist()
         .post(/.*/)
@@ -174,14 +142,6 @@ describe('Testing User class', () => {
       const response: UserTypes.Notificationsettings.Org.ProjectGetResponseType = JSON.parse(
         fixtures.response.notificationsettings.org.project.get,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
@@ -217,14 +177,6 @@ describe('Testing User class', () => {
       const response: UserTypes.Notificationsettings.Org.ProjectPutResponseType = JSON.parse(
         fixtures.response.notificationsettings.org.project.put,
       );
-
-      const axiosResponse: AxiosResponse = {
-        data: response,
-        status: 200,
-        statusText: 'OK',
-        config: {},
-        headers: {},
-      };
 
       nock('https://snyk.io')
         .persist()
