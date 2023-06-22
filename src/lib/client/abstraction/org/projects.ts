@@ -54,7 +54,7 @@ export const getV3 = async (
         v1TypedResult.projects?.push({
           id: resultSet[page][i].id,
           name: resultSet[page][i].attributes.name,
-          type: resultSet[page][i].type,
+          type: resultSet[page][i].attributes.type,
           origin: resultSet[page][i].attributes.origin,
           created: resultSet[page][i].attributes.created.toString(),
           testFrequency:
