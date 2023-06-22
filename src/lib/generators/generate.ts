@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as _ from 'lodash';
 import * as utils from '../utils/generatorUtils';
 import * as swaggerToTS from '../utils/swagger-to-ts';
+import { getObjectKey } from '../utils/utils';
 
 export interface ConsolidatedClass {
   name: string;
@@ -208,12 +209,21 @@ const generateResponseInterfaces = (
               utils.formatClassName(classToGenerateResponseInterfacesFor.name) +
               _.capitalize(method.verb) +
               'ResponseType';
+
             const interfacesString: string[] = swaggerToTS.getTsInterfaceFromSwaggerSchema(
               interfaceName,
               method.response.schema,
             );
-            codeToReturn += interfacesString.join(`
-            `);
+
+            // skip interface generation if type is boolean and not properties or items (straight boolean responses)
+            if (
+              method.response.schema &&
+              (method.response.schema!.hasOwnProperty('properties') ||
+                method.response.schema!.hasOwnProperty('items'))
+            ) {
+              codeToReturn += interfacesString.join(`
+              `);
+            }
 
             break;
           case 'header':
@@ -585,15 +595,31 @@ const generateMethods = (classToGenerateMethodsFor: ConsolidatedClass) => {
         emptyBodyNeeded = true;
       }
 
-      codeToReturn += `
-            async ${method.name} (${method.argsList}):${
+      let returnType =
         method.response?.type == 'bodyless'
           ? 'Promise<any>'
           : 'Promise<' +
             utils.formatClassName(classToGenerateMethodsFor.name) +
             utils.formatClassName(method.name) +
-            'ResponseType>'
-      } {
+            'ResponseType>';
+      if (
+        method.response?.type == 'custom' &&
+        method.response.schema &&
+        !method.response.schema!.hasOwnProperty('properties') &&
+        !method.response.schema!.hasOwnProperty('items')
+      ) {
+        const schemaType = `${
+          getObjectKey(
+            method.response.schema as { [propKey: string]: string },
+            'type',
+          ) || 'any'
+        }`;
+
+        returnType = `Promise<${schemaType}>`;
+      }
+
+      codeToReturn += `
+            async ${method.name} (${method.argsList}):${returnType} {
                 let url = ''
                 let urlQueryParams: Array<string> = []
                 ${method.url.startsWith('if') ? '' : 'url = '}${method.url}

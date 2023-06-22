@@ -1,4 +1,5 @@
 import { Group, GroupTypes } from '../../src/lib/index';
+import { AxiosResponse } from 'axios';
 import nock from 'nock';
 jest.unmock('axios');
 const fixtures = require('../fixtures/group.json').fixtures;

@@ -1,14 +1,14 @@
-import { Orgs, OrgsTypes } from '../../src/lib/index';
+import { Monitor, MonitorTypes } from '../../src/lib/index';
 import { AxiosResponse } from 'axios';
 import nock from 'nock';
 jest.unmock('axios');
-const fixtures = require('../fixtures/orgs.json').fixtures;
+const fixtures = require('../fixtures/monitor.json').fixtures;
 
-describe('Testing Orgs class', () => {
-  it('Testing endpoint: /orgs - GET method', async () => {
+describe('Testing Monitor class', () => {
+  it('Testing endpoint: /monitor/dep-graph - POST method', async () => {
     try {
-      const response: OrgsTypes.OrgsGetResponseType = JSON.parse(
-        fixtures.response.get,
+      const response: MonitorTypes.DepgraphPostResponseType = JSON.parse(
+        fixtures.response.depgraph.post,
       );
 
       nock('https://snyk.io')
@@ -30,7 +30,10 @@ describe('Testing Orgs class', () => {
           return response;
         });
 
-      const result = await new Orgs().get();
+      const result = await new Monitor().depgraph.post(
+        fixtures.request.depgraph.post.body,
+        fixtures.request.depgraph.post.org,
+      );
 
       expect(result).toEqual(response);
     } catch (err) {
