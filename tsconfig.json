@@ -9,16 +9,8 @@
     "importHelpers": true,
     "strict": true,
     "esModuleInterop": true,
-    "lib": [
-      "esnext",
-      "DOM"
-    ],
-    "types": [
-      "node",
-      "jest"
-    ]
+    "lib": ["esnext", "DOM"],
+    "types": ["node", "jest"]
   },
-  "include": [
-    "./src/lib/**/*"
-  ]
+  "include": ["./src/lib/**/*"]
 }

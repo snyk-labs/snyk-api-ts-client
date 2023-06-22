@@ -9,13 +9,8 @@
     "importHelpers": true,
     "strict": true,
     "esModuleInterop": true,
-    "lib": [
-      "esnext",
-      "DOM"
-    ],
-    "types": [
-      "node"
-    ]
+    "lib": ["esnext", "DOM"],
+    "types": ["node"]
   },
   "include": [
     "./src/lib/generators/*",
