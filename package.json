@@ -32,7 +32,7 @@
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/snyk-tech-services/snyk-api-ts-client"
+    "url": "https://github.com/snyk-labs/snyk-api-ts-client"
   },
   "author": "Snyk Tech Services",
   "license": "Apache-2.0",
@@ -43,7 +43,7 @@
     "bin",
     "dist"
   ],
-  "homepage": "https://github.com/snyk-tech-services/snyk-api-ts-client#readme",
+  "homepage": "https://github.com/snyk-labs/snyk-api-ts-client#readme",
   "dependencies": {
     "@snyk/configstore": "^3.2.0-rc1",
     "@snyk/dep-graph": "^1.23.0",
