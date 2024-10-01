@@ -30,6 +30,7 @@
     "snyk-protect": "npx @snyk/protect"
   },
   "types": "./dist/index.d.ts",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/snyk-labs/snyk-api-ts-client"
@@ -53,7 +54,7 @@
     "jsonq": "^1.2.0",
     "lodash": "^4.17.21",
     "snyk-config": "^5.0.0",
-    "snyk-request-manager": "1.8.3",
+    "snyk-request-manager": "^1.8.5",
     "source-map-support": "^0.5.16",
     "tslib": "^1.10.0",
     "typescript": "^3.9.5",
@@ -69,7 +70,7 @@
     "axios-mock-adapter": "^1.19.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
-    "jest": "^25.1.0",
+    "jest": "^25.5.4",
     "jest-mock-axios": "^4.2.0",
     "nock": "^13.0.7",
     "prettier": "2.0.5",

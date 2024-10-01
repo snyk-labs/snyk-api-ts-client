@@ -1,9 +1,10 @@
 {
+  "preset": "ts-jest/presets/default-esm",
   "compilerOptions": {
     "outDir": "./dist",
     "pretty": true,
     "target": "es2019",
-    "module": "commonjs",
+    "module": "ESNext",
     "sourceMap": true,
     "declaration": true,
     "importHelpers": true,
