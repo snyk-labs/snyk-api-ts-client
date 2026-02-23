@@ -13,7 +13,7 @@
 Taking as input a swagger definition we convert from the api blueprint, it generates a client for all Snyk API v1 endpoints.
 APIv3 endpoints are currently not supported.
 
-Generated from [Snyk APIs](https://snyk.docs.apiary.io/)
+Generated from [Snyk APIs](https://docs.snyk.io/snyk-api/reference)
 
 ## Requirements
 Node 14 or above
@@ -23,7 +23,7 @@ Node 14 or above
 
 ## Usage
 
-Find which endpoint is of interest to you in the [API Reference](https://snyk.docs.apiary.io/).\
+Find which endpoint is of interest to you in the [API Reference](https://docs.snyk.io/snyk-api/reference).\
 Then import and use.
 
 ```
@@ -58,5 +58,5 @@ Pass a boolean true/false to see the full response or just the data. Default is 
 
 ### Endpoint deprecation notice
 As of 1.7.3, the `/issues` endpoint is decommissioned. The `aggregated-issues` endpoint is the replacement to use.
-Vulnerable paths can be retrieved using the [paths endpoint](https://snyk.docs.apiary.io/#reference/projects/project-issue-paths/list-all-project-issue-paths) which also contain the `fixVersion` info to know how to fix that particular path.
+Vulnerable paths can be retrieved using the [paths endpoint](https://docs.snyk.io/snyk-api/reference#reference/projects/project-issue-paths/list-all-project-issue-paths) which also contain the `fixVersion` info to know how to fix that particular path.
 The supporting methods are available in the client generated.
