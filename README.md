@@ -5,6 +5,9 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/snyk-tech-services/snyk-api-ts-client/badge.svg)](https://snyk.io/test/github/snyk-tech-services/snyk-api-ts-client)
 [![Inactively Maintained](https://img.shields.io/badge/Maintenance%20Level-Inactively%20Maintained-yellowgreen.svg)](https://gist.github.com/cheerfulstoic/d107229326a01ff0f333a1d3476e068d)
 
+> [!WARNING]
+> **Deprecation notice:** This client is sunset and will no longer be actively maintained.
+> Refer to [Snyk API Reference](https://docs.snyk.io/developer-tools/snyk-api/reference)
 
 **This repository is in maintenance mode, no new features are being developed. Bug & security fixes will continue to be delivered. Open source contributions are welcome for small features & fixes (no breaking changes)**
 
